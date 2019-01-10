@@ -38,7 +38,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.internal.operators.observable.ObservableObserveOn;
+import java_.JavaLogUtil;
+import rx.Observable;
+import rx.Observer;
 import ss.com.toolkit.device.DeviceActivity;
 import ss.com.toolkit.net.NetActivity;
 
@@ -50,18 +57,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        View.OnUnhandledKeyEventListener a;
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
+            Observable.interval(0, 2, TimeUnit.SECONDS)
+                    .subscribe(new Observer<Long>() {
+                        @Override
+                        public void onCompleted() {
+                            JavaLogUtil.log("onCompleted");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            JavaLogUtil.log("onError");
+                        }
+
+                        @Override
+                        public void onNext(Long aLong) {
+                            JavaLogUtil.log("onNext aLong:"+aLong);
+                        }
+                    });
             // 根据包名获取该app密钥散列
             try {
                 PackageInfo info = getPackageManager().getPackageInfo(
-                        "com.huya.kolornumber",
-                        PackageManager.GET_SIGNATURES);
+                        "com.huya.omhcg", PackageManager.GET_SIGNATURES);
                 for (Signature signature : info.signatures) {
                     MessageDigest md = MessageDigest.getInstance("SHA");
                     md.update(signature.toByteArray());
-                    Log.d("nadiee", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                    String key =  new String(Base64.encode(md.digest(),0));
+                    Log.d("initKeyhashs", key);
                 }
             } catch (PackageManager.NameNotFoundException e) {
 
@@ -76,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
     }
+
+
 
     public void datePicker(View view) {
         Calendar selectedDate = Calendar.getInstance();
