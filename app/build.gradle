@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "ss.com.toolkit"
+        applicationId "com.huya.omhcg"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
@@ -102,4 +102,8 @@ dependencies {
     implementation 'com.orhanobut:logger:2.2.0'
 
     implementation 'io.netty:netty-all:4.0.24.Final'
+
+    implementation 'com.amap.api:location:3.3.0'
+    implementation 'com.apkfuns.logutils:library:1.5.1.1'
+    implementation 'com.amap.api:map2d:5.2.0'
 }

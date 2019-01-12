@@ -1,5 +1,7 @@
 package ss.com.toolkit.location;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.Manifest;
@@ -13,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.app.AppCompatActivity;
@@ -29,8 +32,7 @@ public class LocationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-
-        //获取显示地理位置信息的TextView
+      /*  //获取显示地理位置信息的TextView
         postionView = (TextView) findViewById(R.id.positionView);
         //获取地理位置管理器
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -59,18 +61,87 @@ public class LocationActivity extends AppCompatActivity {
             //不为空,显示地理位置经纬度
             showLocation(location);
         }
-        locationManager.requestLocationUpdates(locationProvider, 3000, 1, locationListener);
+        locationManager.requestLocationUpdates(locationProvider, 3000, 1, locationListener);*/
 
     }
 
+    /**
+     * 判断是否需要检测，防止不停的弹框
+     */
+    private boolean isNeedCheck = true;
+
+    /**
+     * 需要进行检测的权限数组
+     */
+    protected String[] needPermissions = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Build.VERSION.SDK_INT >= 23
+                && getApplicationInfo().targetSdkVersion >= 23) {
+            if (isNeedCheck) {
+                checkPermissions(needPermissions);
+            }
+        }
+    }
+    private void checkPermissions(String... permissions) {
+        try {
+            if (Build.VERSION.SDK_INT >= 23
+                    && getApplicationInfo().targetSdkVersion >= 23) {
+                List<String> needRequestPermissonList = findDeniedPermissions(permissions);
+                if (null != needRequestPermissonList
+                        && needRequestPermissonList.size() > 0) {
+                    String[] array = needRequestPermissonList.toArray(new String[needRequestPermissonList.size()]);
+                    Method method = getClass().getMethod("requestPermissions", new Class[]{String[].class,
+                            int.class});
+
+                    method.invoke(this, array, 0);
+                }
+            }
+        } catch (Throwable e) {
+        }
+    }
+    /**
+     * 获取权限集中需要申请权限的列表
+     *
+     * @param permissions
+     * @return
+     * @since 2.5.0
+     *
+     */
+    private List<String> findDeniedPermissions(String[] permissions) {
+        List<String> needRequestPermissonList = new ArrayList<String>();
+        if (Build.VERSION.SDK_INT >= 23
+                && getApplicationInfo().targetSdkVersion >= 23){
+            try {
+                for (String perm : permissions) {
+                    Method checkSelfMethod = getClass().getMethod("checkSelfPermission", String.class);
+                    Method shouldShowRequestPermissionRationaleMethod = getClass().getMethod("shouldShowRequestPermissionRationale",
+                            String.class);
+                    if ((Integer)checkSelfMethod.invoke(this, perm) != PackageManager.PERMISSION_GRANTED
+                            || (Boolean)shouldShowRequestPermissionRationaleMethod.invoke(this, perm)) {
+                        needRequestPermissonList.add(perm);
+                    }
+                }
+            } catch (Throwable e) {
+
+            }
+        }
+        return needRequestPermissonList;
+    }
     /**
      * 显示地理位置经度和纬度信息
      * @param location
      */
     private void showLocation(Location location){
-        String locationStr = "维度：" + location.getLatitude() +"\n"
+       /* String locationStr = "维度：" + location.getLatitude() +"\n"
                 + "经度：" + location.getLongitude();
-        postionView.setText(locationStr);
+        postionView.setText(locationStr);*/
     }
 
     /**
@@ -103,6 +174,7 @@ public class LocationActivity extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -110,5 +182,11 @@ public class LocationActivity extends AppCompatActivity {
             //移除监听器
             locationManager.removeUpdates(locationListener);
         }
+        ss.com.toolkit.location.LocationManager.getInstance().destroyLocation();
+    }
+
+    public void startLocation(View view) {
+        // 定位接口使用，开始定位
+        ss.com.toolkit.location.LocationManager.getInstance().init(null).startLocation();
     }
 }
