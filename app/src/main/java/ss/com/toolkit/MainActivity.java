@@ -6,22 +6,17 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -40,13 +35,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.internal.operators.observable.ObservableObserveOn;
 import java_.JavaLogUtil;
 import rx.Observable;
 import rx.Observer;
 import ss.com.toolkit.device.DeviceActivity;
+import ss.com.toolkit.location.LocationActivity;
 import ss.com.toolkit.net.NetActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -175,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
             Item[] list = {
                     new Item("anim", AnimActivity.class),
                     new Item("net", NetActivity.class),
-                    new Item("device", DeviceActivity.class)
+                    new Item("device", DeviceActivity.class),
+                    new Item("location", LocationActivity.class)
                 };
             @NonNull
             @Override
