@@ -41,6 +41,7 @@ import rx.Observer;
 import ss.com.toolkit.device.DeviceActivity;
 import ss.com.toolkit.location.LocationActivity;
 import ss.com.toolkit.net.NetActivity;
+import ss.com.toolkit.slidebar.SideBarDemoActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -169,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
                     new Item("anim", AnimActivity.class),
                     new Item("net", NetActivity.class),
                     new Item("device", DeviceActivity.class),
-                    new Item("location", LocationActivity.class)
+                    new Item("location", LocationActivity.class),
+                    new Item("slide", SideBarDemoActivity.class)
                 };
             @NonNull
             @Override

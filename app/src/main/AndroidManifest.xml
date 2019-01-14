@@ -58,6 +58,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".location.LocationActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".slidebar.SideBarDemoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
