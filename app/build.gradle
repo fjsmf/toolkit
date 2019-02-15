@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'kotlin-android'
+//apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.huya.omhcg"
+        applicationId "ss.com.toolkit"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
@@ -88,13 +89,13 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.0.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
     // If you want to bind to Android-specific lifecycles
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.0.1'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.1.0'
     // If you want pre-written Activities and Fragments you can subclass as providers
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.wire:wire-runtime:2.3.0-RC1'
@@ -106,4 +107,6 @@ dependencies {
     implementation 'com.amap.api:location:3.3.0'
     implementation 'com.apkfuns.logutils:library:1.5.1.1'
     implementation 'com.amap.api:map2d:5.2.0'
+    implementation "com.jakewharton:butterknife:8.6.0"
+    annotationProcessor "com.jakewharton:butterknife:8.6.0"
 }

@@ -50,7 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AnimActivity"
+        <activity android:name=".anim.AnimActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".net.NetActivity"
             android:theme="@style/AppTheme.NoActionBar"/>

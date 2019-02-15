@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 import java_.JavaLogUtil;
 import rx.Observable;
 import rx.Observer;
+import ss.com.toolkit.anim.AnimActivity;
 import ss.com.toolkit.device.DeviceActivity;
 import ss.com.toolkit.location.LocationActivity;
 import ss.com.toolkit.net.NetActivity;
@@ -164,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         RecyclerView recyclerv_view = findViewById(R.id.recyclerv_view);
-        recyclerv_view.setLayoutManager(new GridLayoutManager(this, 2));
+//        recyclerv_view.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerv_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerv_view.setAdapter(new RecyclerView.Adapter() {
             Item[] list = {
                     new Item("anim", AnimActivity.class),

@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/content"
     xmlns:app="http://schemas.android.com/apk/lib/ss.com.toolkit">
 
     <RelativeLayout
@@ -37,4 +38,18 @@
         android:background="#10ff00ff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/peppers"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:onClick="showblur"
+        android:text="show blur"/>
+    <ImageView
+        android:id="@+id/iv_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

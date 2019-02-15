@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
+import rx.Subscription;
+import rx.functions.Action1;
 import ss.com.toolkit.net.IpInfo;
 
 public class JavaTest {
@@ -15,6 +17,17 @@ public class JavaTest {
     public static void main(String[] args) throws Exception {
         testRxTimer();
         testObservable();
+
+        Subscription subscription = Observable.just("Hello subscription")
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        System.out.println(s);
+                    }
+                });
+        System.out.println(subscription.isUnsubscribed());
+        subscription.unsubscribe();
+        System.out.println(subscription.isUnsubscribed());
     }
     public static void testIpPattern(){
         boolean b = Pattern.matches("^[0-9]*$", "111$11");
