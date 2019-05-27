@@ -12,7 +12,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
         ndk {
-            abiFilters 'armeabi-v7a','x86'
+            abiFilters 'armeabi-v7a', 'x86'
         }
     }
     buildTypes {
@@ -31,12 +31,68 @@ android {
             java.srcDirs += 'src/main/kotlin'
             java.srcDirs += 'src/main/java'
         }
+        huawei {
+            proto {
+                srcDir 'src/main/proto'
+                include '**/*.proto'
+            }
+            jniLibs.srcDirs = ['libs']
+            java.srcDirs += 'src/main/kotlin'
+            java.srcDirs += 'src/main/java'
+        }
     }
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
+        encoding = 'UTF-8'
     }
     useLibrary 'org.apache.http.legacy'
+    applicationVariants.all { variant ->
+        println "rename"
+        variant.outputs.all { output ->
+            outputFileName = "toolkit-${variant.name}-${variant.buildType.name}-${defaultConfig.versionName}.apk"
+            println "=====outputFileName :" + outputFileName
+            output.processManifest.doLast {
+                println "------------output.processManifest.doLast------------"
+                // Stores the path to the maifest.
+                String manifestPath = "$manifestOutputDirectory/AndroidManifest.xml"
+                println "manifestPath: " + manifestPath
+                // Stores the contents of the manifest.
+                def manifestContent = file(manifestPath).getText()
+                // Changes the version code in the stored text.
+                manifestContent = manifestContent.replace('android:value="debug"',
+                        String.format('android:value="%s"', "google"))
+                // Overwrites the manifest with the new text.
+                file(manifestPath).write(manifestContent, "UTF-8")
+            }
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    flavorDimensions "market", "region"
+    productFlavors {
+        huawei {
+            applicationId "ss.com.toolkit.huawei"
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE:"channel1"]
+            versionCode 1
+            versionName "1.0"
+            dimension "market"
+            buildConfigField "boolean", "SUPPORT_DOWNLOAD", "false"
+        }
+        xiaomi {
+            dimension "market"
+            buildConfigField "boolean", "SUPPORT_DOWNLOAD", "true"
+        }
+        domestic {
+            dimension "region"
+            buildConfigField "boolean", "SUPPORT_AUTO_UPDATE_FEATURE", "false"
+        }
+        foreign {
+            dimension "region"
+            buildConfigField "boolean", "SUPPORT_AUTO_UPDATE_FEATURE", "true"
+        }
+    }
 }
 protobuf {
     protoc {
@@ -70,7 +126,7 @@ protobuf {
             }
 
             task.plugins {
-                javalite { }
+                javalite {}
             }
         }
     }
@@ -109,4 +165,13 @@ dependencies {
     implementation 'com.amap.api:map2d:5.2.0'
     implementation "com.jakewharton:butterknife:8.6.0"
     annotationProcessor "com.jakewharton:butterknife:8.6.0"
+    implementation "io.reactivex.rxjava2:rxjava:2.1.16"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
+
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+// config repo on productFlavors
+//    debugImplementation 'com.squareup.retrofit2:retrofit:2.4.0'
+//    huaweiImplementation 'com.squareup.retrofit2:retrofit:2.4.0'
+//    huaweiDomesticImplementation  'com.squareup.retrofit2:retrofit:2.4.0'
+//    huaweiDomesticDebugImplementation  'com.squareup.retrofit2:retrofit:2.4.0'
 }

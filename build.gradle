@@ -4,6 +4,9 @@ buildscript {
     ext.kotlin_version = '1.3.11'
     repositories {
         //加入下面这句
+        maven {
+            url "http://nexus.huya.com:8081/repository/maven-public"
+        }
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         google()
         jcenter()
@@ -24,6 +27,9 @@ allprojects {
         jcenter()
         //加入下面这句
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven {
+            url "http://nexus.huya.com:8081/repository/maven-public"
+        }
     }
 }
 

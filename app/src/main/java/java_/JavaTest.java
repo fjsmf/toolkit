@@ -1,5 +1,10 @@
 package java_;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -15,6 +20,85 @@ import ss.com.toolkit.net.IpInfo;
 public class JavaTest {
     static Object o1 = new Object(), o2 = new Object();
     public static void main(String[] args) throws Exception {
+        Random random = new Random();
+        for (int i = 0; i < 15; i++) {
+            System.out.println(random.nextInt(4));
+        }
+        String aa = "aldjfkldgjkfdgjdflgjldfgjdfklgjdflgjdflkgjdf";
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 100000L; i++) {
+//            aa.substring(aa.length()/2, aa.length()/2 + 2);
+//            try {
+                aa.substring(aa.length()/2, aa.length()/2 + 2);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(String.format(Locale.US, "catch: start:%d, end:%d, escape:%d", start, end, end - start));
+
+        aa = "aldjfkldgjkfdgjdflgjldfgjdfklgjdflgjdflkgjdf";
+        start = System.currentTimeMillis();
+        for (int j = 0; j < 100000L; j++) {
+//            try {
+                aa.substring(aa.length()/2, aa.length()/2 + 2);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+        }
+        end = System.currentTimeMillis();
+        System.out.println(String.format(Locale.US, "catch: start:%d, end:%d, escape:%d", start, end, end - start));
+        // 冒泡排序
+        int[] arr = {100,12,-3, 2,4,0,8,1,76,33,11,55,22,1,0};
+        for (int i = 0, len = arr.length; i < len - 1; i++) {
+            for (int j = 0; j < len - 1 - i; j++) {
+                if (arr[j] < arr[j + 1]) { // 相邻元素两两对比
+                    int temp = arr[j + 1]; // 元素交换
+                    arr[j + 1] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i : arr) {
+            sb.append(i).append("  ");
+        }
+        System.out.println(sb);
+        String a = null, b = "";
+        if (b.equals(a)) {
+            System.out.println("equals");
+        } else {
+            System.out.println("not equals");
+        }
+
+        String s = "\\ud83d\\ude00";
+        System.out.println(s.replace("\\", "\\"));
+        System.out.println("str2HexStr :" + Hex.str2HexStr("\ud83d\ude23"));
+        String content = "[ud83dude23][ud83dude23]ud83dude23]";
+        String emojiStr = "\ud83d\ude23][ud83dude23]ud83dude23]";
+//        String zhengze = "\\[u[^\\]]+u[^\\]]+\\]";
+        String zhengze = "(?:[\\uD83C\\uDF00-\\uD83D\\uDDFF]|[\\uD83E\\uDD00-\\uD83E\\uDDFF]|[\\uD83D\\uDE00-\\uD83D\\uDE4F]|[\\uD83D\\uDE80-\\uD83D\\uDEFF]|[\\u2600-\\u26FF]\\uFE0F?|[\\u2700-\\u27BF]\\uFE0F?|\\u24C2\\uFE0F?|[\\uD83C\\uDDE6-\\uD83C\\uDDFF]{1,2}|[\\uD83C\\uDD70\\uD83C\\uDD71\\uD83C\\uDD7E\\uD83C\\uDD7F\\uD83C\\uDD8E\\uD83C\\uDD91-\\uD83C\\uDD9A]\\uFE0F?|[\\u0023\\u002A\\u0030-\\u0039]\\uFE0F?\\u20E3|[\\u2194-\\u2199\\u21A9-\\u21AA]\\uFE0F?|[\\u2B05-\\u2B07\\u2B1B\\u2B1C\\u2B50\\u2B55]\\uFE0F?|[\\u2934\\u2935]\\uFE0F?|[\\u3030\\u303D]\\uFE0F?|[\\u3297\\u3299]\\uFE0F?|[\\uD83C\\uDE01\\uD83C\\uDE02\\uD83C\\uDE1A\\uD83C\\uDE2F\\uD83C\\uDE32-\\uD83C\\uDE3A\\uD83C\\uDE50\\uD83C\\uDE51]\\uFE0F?|[\\u203C\\u2049]\\uFE0F?|[\\u25AA\\u25AB\\u25B6\\u25C0\\u25FB-\\u25FE]\\uFE0F?|[\\u00A9\\u00AE]\\uFE0F?|[\\u2122\\u2139]\\uFE0F?|\\uD83C\\uDC04\\uFE0F?|\\uD83C\\uDCCF\\uFE0F?|[\\u231A\\u231B\\u2328\\u23CF\\u23E9-\\u23F3\\u23F8-\\u23FA]\\uFE0F?)";
+        // 通过传入的正则表达式来生成一个pattern
+        Pattern patten = Pattern.compile(zhengze, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = patten.matcher(content);
+        while (matcher.find()) {
+            String key = matcher.group();
+            System.out.println("key :" + key);
+        }
+
+
+        System.out.println("long : " + (long)Math.ceil(1100/1000.0));
+        List<String> list = new ArrayList<>();
+        list.add("a");
+        list.add("a");
+        list.add("b");
+        list.remove("b");
+        list.remove("b");
+        list.remove(null);
+        System.out.println("size:" + list.size());
+        System.out.println(Math.round(3100/1000.0));
+        System.out.println(Math.round(3500/1000.0));
+        System.out.println(Math.round(4900/1000.0));
         testRxTimer();
         testObservable();
 

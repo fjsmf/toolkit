@@ -1,11 +1,17 @@
 package ss.com.toolkit;
 
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +20,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +51,7 @@ import ss.com.toolkit.anim.AnimActivity;
 import ss.com.toolkit.device.DeviceActivity;
 import ss.com.toolkit.location.LocationActivity;
 import ss.com.toolkit.net.NetActivity;
+import ss.com.toolkit.record.AudioRecordActivity;
 import ss.com.toolkit.slidebar.SideBarDemoActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,11 +59,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("nadiee", "onCreate-1");
+        if (!isTaskRoot()) {
+            Log.i("nadiee", "onCreate-is not TaskRoot");
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null && action.equals(Intent.ACTION_MAIN)) {
+                finish();
+                return;
+            }
+        }
+        Log.i("nadiee", "onCreate-is TaskRoot");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         View.OnUnhandledKeyEventListener a;
         FloatingActionButton fab = findViewById(R.id.fab);
+        TextView emoji = findViewById(R.id.emoji);//
+//        emoji.setText(new String(Character.toChars(Integer.parseInt("2764", 16))));
+//        emoji.setText("\ud83d\udc7a");
+//        emoji.setText("\uf09f\u98a3");
+        SpannableString spannableString = new SpannableString("1234");
+        Drawable drawable = getResources().getDrawable(R.mipmap.emoji01_03);
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+        bitmapDrawable.setBounds(0, 0, bitmapDrawable.getIntrinsicWidth(), bitmapDrawable.getIntrinsicHeight());
+        ImageSpan imageSpan = new ImageSpan(bitmapDrawable);
+        // 将该图片替换字符串中规定的位置中
+        spannableString.setSpan(imageSpan, 1, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        emoji.setText(spannableString);
+        String ee = (String) emoji.getText();
         fab.setOnClickListener(view -> {
             Observable.interval(0, 2, TimeUnit.SECONDS)
                     .subscribe(new Observer<Long>() {
@@ -173,7 +207,8 @@ public class MainActivity extends AppCompatActivity {
                     new Item("net", NetActivity.class),
                     new Item("device", DeviceActivity.class),
                     new Item("location", LocationActivity.class),
-                    new Item("slide", SideBarDemoActivity.class)
+                    new Item("slide", SideBarDemoActivity.class),
+                    new Item("record", AudioRecordActivity.class)
                 };
             @NonNull
             @Override
@@ -185,7 +220,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 ((MyViewHolder)viewHolder).txt.setText(list[i].name);
-                viewHolder.itemView.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, list[i].clazz)));
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, list[i].clazz));
+                    }
+                });
             }
 
             @Override
@@ -193,6 +233,38 @@ public class MainActivity extends AppCompatActivity {
                 return list.length;
             }
         });
+    }
+//    showNotification(MainActivity.this);
+    public void showNotification(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("name", "maofei");
+        Notification notification = new android.support.v4.app.NotificationCompat.Builder(context)
+                /**设置通知左边的大图标**/
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
+                /**设置通知右边的小图标**/
+                .setSmallIcon(R.mipmap.ic_launcher)
+                /**通知首次出现在通知栏，带上升动画效果的**/
+                .setTicker("通知来了")
+                /**设置通知的标题**/
+                .setContentTitle("这是一个通知的标题")
+                /**设置通知的内容**/
+                .setContentText("这是一个通知的内容这是一个通知的内容")
+                /**通知产生的时间，会在通知信息里显示**/
+                .setWhen(System.currentTimeMillis())
+                /**设置该通知优先级**/
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                /**设置这个标志当用户单击面板就可以让通知将自动取消**/
+                .setAutoCancel(true)
+                /**设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)**/
+                .setOngoing(false)
+                /**向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：**/
+                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
+                .setContentIntent(PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT))
+                .setChannelId("11")
+                .build();
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        /**发起通知**/
+        notificationManager.notify(11, notification);
     }
 
     class Item{
