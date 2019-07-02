@@ -51,6 +51,7 @@ import ss.com.toolkit.anim.AnimActivity;
 import ss.com.toolkit.device.DeviceActivity;
 import ss.com.toolkit.location.LocationActivity;
 import ss.com.toolkit.net.NetActivity;
+import ss.com.toolkit.net.tracerouteping.ui.TraceActivity;
 import ss.com.toolkit.record.AudioRecordActivity;
 import ss.com.toolkit.slidebar.SideBarDemoActivity;
 
@@ -208,7 +209,8 @@ public class MainActivity extends AppCompatActivity {
                     new Item("device", DeviceActivity.class),
                     new Item("location", LocationActivity.class),
                     new Item("slide", SideBarDemoActivity.class),
-                    new Item("record", AudioRecordActivity.class)
+                    new Item("record", AudioRecordActivity.class),
+                    new Item("tracerout", TraceActivity.class)
                 };
             @NonNull
             @Override

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="external_files" path="Pictures/Kolor"/>
+    <external-path path="" name="sdcard_files" />
+    <root-path path="" name="root_files"/>
+    <external-files-path   path="file/" name="camera_has_sdcard"/>
+</paths>

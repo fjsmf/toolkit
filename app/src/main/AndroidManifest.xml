@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ss.com.toolkit">
-
+    <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
@@ -66,6 +66,8 @@
         <activity android:name=".slidebar.SideBarDemoActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".record.AudioRecordActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".net.tracerouteping.ui.TraceActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

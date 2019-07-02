@@ -79,6 +79,26 @@ android {
             versionName "1.0"
             dimension "market"
             buildConfigField "boolean", "SUPPORT_DOWNLOAD", "false"
+            project.afterEvaluate {
+                android.applicationVariants.all {variant ->
+                    String variantName = variant.name.capitalize()
+                    def processManifestTask = project.tasks.getByName("process${variantName}Manifest")
+                    processManifestTask.doLast { pmt ->
+                        def apk = variant.outputs[0].outputFile
+                        println("===== apk name:"+apk)
+                        String manifestPath = "$pmt.manifestOutputDirectory/AndroidManifest.xml"
+                        def manifest = file(manifestPath).getText()
+
+                        def xml = new XmlParser().parseText(manifest)
+                        boolean removeSuc = xml.remove(new Node(xml, "uses-permission", ['android:name': 'android.permission.SEND_SMS']))
+                        println("remove SEND_SMS  " + removeSuc)
+//                        <uses-permission android:name="android.permission.SEND_SMS"/>
+//                        xml.application[0].appendNode("meta-data", ['android:name': 'AF_PRE_INSTALL_NAME', 'android:value': '9apps_int'])
+                        def serialize = groovy.xml.XmlUtil.serialize(xml)
+                        file(manifestPath).write(serialize)
+                    }
+                }
+            }
         }
         xiaomi {
             dimension "market"

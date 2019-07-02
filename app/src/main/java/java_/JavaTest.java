@@ -18,8 +18,17 @@ import rx.functions.Action1;
 import ss.com.toolkit.net.IpInfo;
 
 public class JavaTest {
+
     static Object o1 = new Object(), o2 = new Object();
     public static void main(String[] args) throws Exception {
+        String fb = "{\"status\":1}";
+        if (fb.contains("\"status\":1")) {
+
+        }
+
+
+        long time = System.currentTimeMillis();
+        System.out.println("int long : " + (int)time + ", long:" + time);
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
             System.out.println(random.nextInt(4));
