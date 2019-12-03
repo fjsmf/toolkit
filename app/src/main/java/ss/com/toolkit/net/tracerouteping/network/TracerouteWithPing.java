@@ -32,7 +32,7 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 
 import ss.com.toolkit.R;
-import ss.com.toolkit.net.tracerouteping.ui.TraceActivity;
+import ss.com.toolkit.ui.TraceActivity;
 
 /**
  * This class contain everything needed to launch a traceroute using the ping command

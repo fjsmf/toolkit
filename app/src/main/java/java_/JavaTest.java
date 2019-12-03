@@ -1,11 +1,22 @@
 package java_;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,9 +29,251 @@ import rx.functions.Action1;
 import ss.com.toolkit.net.IpInfo;
 
 public class JavaTest {
-
     static Object o1 = new Object(), o2 = new Object();
-    public static void main(String[] args) throws Exception {
+
+    static final String HEXES = "0123456789abcdef";
+
+    public static String getHex(byte[] raw) {
+        if (raw == null) {
+            return null;
+        }
+        final StringBuilder hex = new StringBuilder(2 * raw.length);
+        for (final byte b : raw) {
+            hex.append(HEXES.charAt((b & 0xF0) >> 4))
+                    .append(HEXES.charAt((b & 0x0F)));
+        }
+        return hex.toString();
+    }
+
+    class B{
+
+    }
+
+    public static void main(String[] args) {
+        List<String> l1 = new ArrayList<>();
+        List<String> l2 = l1;
+        List<String> l3 = new ArrayList<>();
+        l3.add("a");
+        l1.addAll(l3);
+        System.out.println(l2);
+        boolean bbb = true;
+        boolean b1 = false;
+        bbb |= b1;
+        System.out.println(bbb);
+        List<String> lista = new ArrayList<>();
+        lista.add("a");
+        lista.add(1, "b");
+        lista.add(lista.size(), "c");
+        for (String s : lista) {
+            System.out.println(s);
+        }
+        Class cls = null;
+        try {
+            cls = Class.forName("java_.Hex");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Hex b = (Hex)cls.newInstance();
+            System.out.println("hex : "+b);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
+        byte[] bytes = "sunmaofei".getBytes();
+        StringBuilder sb = new StringBuilder();
+        char[] hexes = HEXES.toCharArray();
+        for (int i = 0, len = bytes.length, v; i < len; i++) {
+            v = bytes[i] & 0xff;
+            System.out.println("v : " + v);
+            System.out.println((v >>> 4) + " : " + hexes[v >>> 4]);
+            System.out.println((v & 0x0f) + " : " + hexes[v & 0x0f]);
+            sb.append(hexes[v >>> 4]);
+            sb.append(hexes[v & 0x0f]);
+        }
+        System.out.println(sb.toString());
+
+
+
+        System.out.println(7 << 4 & 0xf0);
+        String hexString = "73756e6d616f666569";
+        bytes = hexString.getBytes();
+        byte[] back = new byte[bytes.length / 2];
+        for (int i = 0, len = bytes.length / 2; i < len; i++) {
+            back[i] = (byte) Integer.parseInt(hexString.substring(2 * i, 2 * i + 2), 16);
+        }
+        try {
+            System.out.println("back : " + new String(back, "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+//        System.out.println(byteArrayToHex("sunmaofei".getBytes()));
+//        System.out.println(new BigInteger(1, "sunmaofei".getBytes()).toString(16));
+//        System.out.println(getHex("sunmaofei".getBytes()));
+//        System.out.println(bytesToHex("s".getBytes(), new char[200]));
+        System.out.println(toStringHex1("6e"));
+    }
+
+    private static String bytesToHex(@NonNull byte[] bytes, @NonNull char[] hexChars) {
+        int v;
+        char[] hex = HEXES.toCharArray();
+        for (int j = 0; j < bytes.length; j++) {
+            v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hex[v >>> 4];
+            hexChars[j * 2 + 1] = hex[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
+    public static String byteArrayToHex(byte[] a) {
+        StringBuilder sb = new StringBuilder(a.length * 2);
+        for (byte b : a)
+            sb.append(String.format("%02x", b));
+        return sb.toString();
+    }
+
+    //转化字符串为十六进制编码
+    public static String toHexString(String s) {
+        String str = "";
+        for (int i = 0; i < s.length(); i++) {
+            int ch = (int) s.charAt(i);
+            String s4 = Integer.toHexString(ch);
+            str = str + s4;
+        }
+        return str;
+    }
+
+    // 转化十六进制编码为字符串
+    public static String toStringHex1(String s) {
+        byte[] baKeyword = new byte[s.length() / 2];
+        for (int i = 0; i < baKeyword.length; i++) {
+            try {
+                baKeyword[i] = (byte) (0xff & Integer.parseInt(s.substring(
+                        i * 2, i * 2 + 2), 16));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            s = new String(baKeyword, "utf-8");// UTF-16le:Not
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return s;
+    }
+
+    // 转化十六进制编码为字符串
+    public static String toStringHex2(String s) {
+        byte[] baKeyword = new byte[s.length() / 2];
+        for (int i = 0; i < baKeyword.length; i++) {
+            try {
+                baKeyword[i] = (byte) (0xff & Integer.parseInt(s.substring(
+                        i * 2, i * 2 + 2), 16));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            s = new String(baKeyword, "utf-8");// UTF-16le:Not
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return s;
+    }
+//    public static void main(String[] args) {
+//        List<Integer> Test = new ArrayList<Integer>();
+//        for (int i = 0; i < 10000000; i++) {
+//            Test.add(i);
+//        }
+//        Long a1 = System.currentTimeMillis();
+//        //普通的for
+//        int size = Test.size();
+//        for (int i = 0; i < size; i++) {
+//            Integer integer = Test.get(i);
+//        }
+//        Long a2 = System.currentTimeMillis();
+//        //for增强版
+//        for (Integer integer : Test) { }
+//        Long a3 = System.currentTimeMillis();
+//        //iterator
+//        Iterator<Integer> iterator = Test.iterator();
+//        while (iterator.hasNext()){
+//            Integer integer = iterator.next();
+//        }
+//        Long a4 = System.currentTimeMillis();
+//        System.out.println("普通的for==================="+ (a2 - a1));
+//        System.out.println("for增强版==================="+ (a3 - a2));
+//        System.out.println("iterator==================="+ (a4 - a3));
+//    }
+
+    /*public static void main(String[] args) throws Exception {
+        String aas = "aa";
+        if (aas.equals(null)) {
+            System.out.println(aas);
+        } else {
+            System.out.println("null");
+        }
+        List<Integer> listf = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            listf.add(i);
+        }
+        for (int s : listf) {
+            System.out.println(s);
+        }
+
+        DecimalFormat df = new DecimalFormat("#.00");
+        df.setRoundingMode(RoundingMode.DOWN);
+        System.out.println("test :" + df.format(10000/1000.0));
+        System.out.println("test :" + df.format(12345/1000.0));
+        System.out.println("test :" + df.format(12341234/1000000.0));
+        System.out.println(Math.ceil(10000/1000.0));
+        System.out.println(Math.ceil(12345/1000.0));
+        System.out.println(Math.ceil(12341234/1000.0));
+        HashMap<String, String> hm = new HashMap<String, String>();
+        hm.put("1", "111");
+        hm.put("2", "222");
+        hm.put("3", "333");
+        Set<Map.Entry<String, String>> entrySet = hm.entrySet();
+        Iterator<Map.Entry<String, String>> iter = entrySet.iterator();
+        while (iter.hasNext()) {
+            Map.Entry<String, String> entry = iter.next();
+            System.out.println(entry.getKey() + "\t" + entry.getValue());
+        }
+
+        List<String> arrayList = new ArrayList<>();
+        int gcounter = 0;
+        while (gcounter++ < 15000000) {
+            arrayList.add(String.valueOf(gcounter));
+        }
+        String item;
+        long t1 = System.currentTimeMillis();
+        for (int i = 0; i < arrayList.size(); ++i) {
+            item = arrayList.get(i);
+        }
+        long t2 = System.currentTimeMillis();
+        System.out.println("escape time 1:" + (t2 - t1));
+
+        for (int i = 0, len = arrayList.size(); i < len; ++i) {
+            item = arrayList.get(i);
+        }
+        System.out.println("escape time 2:" + (System.currentTimeMillis() - t2));
+        long t3 = System.currentTimeMillis();
+        for (String item1 : arrayList) {
+
+        }
+        long t4 = System.currentTimeMillis();
+        System.out.println("escape time 3:" + (t4 - t3));
+        Iterator<String> itr = arrayList.iterator();
+        while (itr.hasNext()) {
+            item = itr.next();
+        }
+        long t5 = System.currentTimeMillis();
+        System.out.println("escape time 4:" + (t5 - t4));
+
+
         String fb = "{\"status\":1}";
         if (fb.contains("\"status\":1")) {
 
@@ -28,7 +281,7 @@ public class JavaTest {
 
 
         long time = System.currentTimeMillis();
-        System.out.println("int long : " + (int)time + ", long:" + time);
+        System.out.println("int long : " + (int) time + ", long:" + time);
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
             System.out.println(random.nextInt(4));
@@ -38,7 +291,7 @@ public class JavaTest {
         for (int i = 0; i < 100000L; i++) {
 //            aa.substring(aa.length()/2, aa.length()/2 + 2);
 //            try {
-                aa.substring(aa.length()/2, aa.length()/2 + 2);
+            aa.substring(aa.length() / 2, aa.length() / 2 + 2);
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
@@ -50,7 +303,7 @@ public class JavaTest {
         start = System.currentTimeMillis();
         for (int j = 0; j < 100000L; j++) {
 //            try {
-                aa.substring(aa.length()/2, aa.length()/2 + 2);
+            aa.substring(aa.length() / 2, aa.length() / 2 + 2);
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
@@ -58,7 +311,7 @@ public class JavaTest {
         end = System.currentTimeMillis();
         System.out.println(String.format(Locale.US, "catch: start:%d, end:%d, escape:%d", start, end, end - start));
         // 冒泡排序
-        int[] arr = {100,12,-3, 2,4,0,8,1,76,33,11,55,22,1,0};
+        int[] arr = {100, 12, -3, 2, 4, 0, 8, 1, 76, 33, 11, 55, 22, 1, 0};
         for (int i = 0, len = arr.length; i < len - 1; i++) {
             for (int j = 0; j < len - 1 - i; j++) {
                 if (arr[j] < arr[j + 1]) { // 相邻元素两两对比
@@ -96,7 +349,7 @@ public class JavaTest {
         }
 
 
-        System.out.println("long : " + (long)Math.ceil(1100/1000.0));
+        System.out.println("long : " + (long) Math.ceil(1100 / 1000.0));
         List<String> list = new ArrayList<>();
         list.add("a");
         list.add("a");
@@ -105,9 +358,9 @@ public class JavaTest {
         list.remove("b");
         list.remove(null);
         System.out.println("size:" + list.size());
-        System.out.println(Math.round(3100/1000.0));
-        System.out.println(Math.round(3500/1000.0));
-        System.out.println(Math.round(4900/1000.0));
+        System.out.println(Math.round(3100 / 1000.0));
+        System.out.println(Math.round(3500 / 1000.0));
+        System.out.println(Math.round(4900 / 1000.0));
         testRxTimer();
         testObservable();
 
@@ -121,8 +374,9 @@ public class JavaTest {
         System.out.println(subscription.isUnsubscribed());
         subscription.unsubscribe();
         System.out.println(subscription.isUnsubscribed());
-    }
-    public static void testIpPattern(){
+    }*/
+
+    public static void testIpPattern() {
         boolean b = Pattern.matches("^[0-9]*$", "111$11");
         System.out.println(b);
 
@@ -137,13 +391,14 @@ public class JavaTest {
                 ipInfo.ip = ipInfo.ip.substring(16);
                 System.out.println(ipInfo.ip);
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
-    public static void testWaitNotiy(){
-        for(int i = 0; i < 10; i++){
+
+    public static void testWaitNotiy() {
+        for (int i = 0; i < 10; i++) {
             synchronized (o1) {
                 System.out.println("start " + i);
                 new Thread() {
@@ -202,24 +457,26 @@ public class JavaTest {
 
                     @Override
                     public void onNext(Long aLong) {
-                        JavaLogUtil.log("onNext aLong:"+aLong);
+                        JavaLogUtil.log("onNext aLong:" + aLong);
                     }
                 });
     }
 
     public static void testObservable() {
-        Observer observer = new Observer(){
+        Observer observer = new Observer() {
             @Override
             public void onCompleted() {
                 JavaLogUtil.log("onCompleted");
             }
+
             @Override
             public void onError(Throwable e) {
-                JavaLogUtil.log("onError :"+e.getMessage());
+                JavaLogUtil.log("onError :" + e.getMessage());
             }
+
             @Override
             public void onNext(Object o) {
-                JavaLogUtil.log("onNext : "+o.toString());
+                JavaLogUtil.log("onNext : " + o.toString());
             }
         };
 
@@ -253,13 +510,13 @@ public class JavaTest {
 
             @Override
             public void onError(Throwable e) {
-                JavaLogUtil.log("Subscriber onError : "+e.getMessage());
+                JavaLogUtil.log("Subscriber onError : " + e.getMessage());
             }
 
             @Override
             public void onNext(Object o) {
-                if (!isUnsubscribed()){
-                    JavaLogUtil.log("Subscriber onNext : "+o.toString());
+                if (!isUnsubscribed()) {
+                    JavaLogUtil.log("Subscriber onNext : " + o.toString());
                 }
                 unsubscribe();
             }

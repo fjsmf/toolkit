@@ -13,4 +13,8 @@
     <string name="error">An error occurred, please try again</string>
     <string name="timeout">Timeout</string>
     <string name="placeholder">www.google.fr</string>
+
+    <string name="text_stars">%d \nStars</string>
+    <string name="text_watchers">%d \nWatchers</string>
+    <string name="text_forks">%d \nForks</string>
 </resources>

@@ -19,4 +19,5 @@
     <color name="title_color">#262626</color>
     <color name="transparent_color">#00000000</color>
     <color name="transparent_dark_color">#bb000000</color>
+    <color name="white">#ffffff</color>
 </resources>

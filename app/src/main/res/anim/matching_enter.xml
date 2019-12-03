@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 弹出时动画 -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true">
+    <scale
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:fromXScale="0.8"
+        android:toXScale="1.0"
+        android:fromYScale="0.8"
+        android:toYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="200"/>
+    <!--pivotX:X轴缩放的位置为中心点
+    fillAfter:
+    fillBefore是指动画结束时画面停留在第一帧，fillAfter是指动画结束是画面停留在最后一帧。
+    这2个参数不能在</alpha>,</scale>,</translate>,</rotate>中设置没有效果，必须</set>中设置才可以-->
+    <alpha
+        android:fromAlpha="0.5"
+        android:toAlpha="1.0"
+        android:duration="200"/>
+</set>

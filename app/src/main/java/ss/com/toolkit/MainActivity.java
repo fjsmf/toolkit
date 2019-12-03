@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -44,21 +44,29 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
 import java_.JavaLogUtil;
 import rx.Observable;
 import rx.Observer;
 import ss.com.toolkit.anim.AnimActivity;
+import ss.com.toolkit.base.BaseActivity;
 import ss.com.toolkit.device.DeviceActivity;
 import ss.com.toolkit.location.LocationActivity;
 import ss.com.toolkit.net.NetActivity;
-import ss.com.toolkit.net.tracerouteping.ui.TraceActivity;
+import ss.com.toolkit.notification.NotificationActivity;
+import ss.com.toolkit.ui.TraceActivity;
+import ss.com.toolkit.ui.wechat.WechatListActivity;
 import ss.com.toolkit.record.AudioRecordActivity;
 import ss.com.toolkit.slidebar.SideBarDemoActivity;
+import ss.com.toolkit.view.HeadViewWithFrame;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
+    @BindView(R.id.headview)
+    HeadViewWithFrame headview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
         Log.i("nadiee", "onCreate-1");
         if (!isTaskRoot()) {
@@ -71,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         Log.i("nadiee", "onCreate-is TaskRoot");
-        setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         View.OnUnhandledKeyEventListener a;
@@ -199,9 +206,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        headview.setProfile("https://cdn-test.poko.app/image/face/201906/14/1560479203712/91944137-200.png",
+                "https://cdn-test.poko.app/image/common2/201910/30/1572407150783/841913d48fa925b8.png", R.drawable.emoji01_03);
         RecyclerView recyclerv_view = findViewById(R.id.recyclerv_view);
 //        recyclerv_view.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerv_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerv_view.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerv_view.setAdapter(new RecyclerView.Adapter() {
             Item[] list = {
                     new Item("anim", AnimActivity.class),
@@ -210,7 +219,10 @@ public class MainActivity extends AppCompatActivity {
                     new Item("location", LocationActivity.class),
                     new Item("slide", SideBarDemoActivity.class),
                     new Item("record", AudioRecordActivity.class),
-                    new Item("tracerout", TraceActivity.class)
+                    new Item("tracerout", TraceActivity.class),
+                    new Item("wechat list", WechatListActivity.class),
+                    new Item("notification", NotificationActivity.class),
+                    new Item("editView", EditTextActivity.class)
                 };
             @NonNull
             @Override
