@@ -6,10 +6,7 @@ buildscript {
         jcenter()
         mavenCentral()
         google()
-        //加入下面这句
-        maven {
-            url "http://nexus.huya.com:8081/repository/maven-public"
-        }
+
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
 
     }
@@ -35,9 +32,7 @@ allprojects {
         jcenter()
         //加入下面这句
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
-        maven {
-            url "http://nexus.huya.com:8081/repository/maven-public"
-        }
+
     }
 }
 
