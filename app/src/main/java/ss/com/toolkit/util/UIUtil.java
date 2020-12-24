@@ -11,7 +11,7 @@ public class UIUtil {
             return ((BitmapDrawable) drawable).getBitmap();
         }
 
-        int width = drawable.getIntrinsicWidth();
+        int width = drawable.getIntrinsicWidth(); // 此处去除来-1！！！！！！！！！！！drawableToBitmap失效
         width = width > 0 ? width : 1;
         int height = drawable.getIntrinsicHeight();
         height = height > 0 ? height : 1;

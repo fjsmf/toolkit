@@ -3,10 +3,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rxlifecycle-components-2.1.0.aar/0a8bc983fd255c75ab017ad1951015de/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rxlifecycle-components-2.1.0.aar/0a8bc983fd255c75ab017ad1951015de/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rxlifecycle-components-2.1.0.aar/0a8bc983fd255c75ab017ad1951015de/AndroidManifest.xml" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.trello.rxlifecycle2/rxlifecycle-components/2.1.0/c944d4135b513d469bffd8e8ac6f46bc99b82c4e/rxlifecycle-components-2.1.0-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.trello.rxlifecycle2/rxlifecycle-components/2.1.0/cf355c8c49c583d3aee918d9e2181ed289420977/rxlifecycle-components-2.1.0-sources.jar!/" />
     </SOURCES>

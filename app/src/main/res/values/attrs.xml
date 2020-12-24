@@ -17,4 +17,23 @@
         <attr name="scaleItemCount" format="integer"></attr>
 
     </declare-styleable>
+
+    <declare-styleable name="CircleProgressBar">
+        <attr name="cpb_progressColor" format="color"/>
+        <attr name="cpb_backgroundColor" format="color"/>
+        <attr name="cpb_strokeWidth" format="float"/>
+        <attr name="cpb_backgroundWidth" format="float"/>
+        <attr name="cpb_roundedCorners" format="boolean"/>
+        <attr name="cpb_maxValue" format="float"/>
+        <attr name="cpb_progressTextColor" format="color"/>
+        <attr name="cpb_textSize" format="dimension"/>
+        <attr name="cpb_progressText" format="string"/>
+        <attr name="cpb_suffix" format="string"/>
+        <attr name="cpb_prefix" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="avatarFrame">
+        <!--用户头像占比-->
+        <attr name="avatar_ratio" format="float" />
+    </declare-styleable>
 </resources>

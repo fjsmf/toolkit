@@ -1,6 +1,8 @@
 package ss.com.toolkit;
 
 import android.content.Context;
+import android.net.http.HttpResponseCache;
+import android.os.Process;
 import android.support.multidex.MultiDexApplication;
 
 import com.apkfuns.logutils.LogLevel;
@@ -9,6 +11,9 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+
+import java.io.File;
+import java.io.IOException;
 
 public class App extends MultiDexApplication {
     private static App instance;
@@ -26,6 +31,7 @@ public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        LogUtils.tag("nadiee").d("pid:" + Process.myPid());
         // logger
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(true)
@@ -41,5 +47,16 @@ public class App extends MultiDexApplication {
                 return true;
             }
         });
+        initSVGACache();
+
+    }
+
+    private void initSVGACache() {
+        try {
+            File cacheDir = new File(getFilesDir(), "http");
+            HttpResponseCache.install(cacheDir, 1024 * 1024 * 50);
+        } catch (IOException mE) {
+            mE.printStackTrace();
+        }
     }
 }

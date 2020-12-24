@@ -3,13 +3,19 @@ package java_;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.apkfuns.logutils.LogUtils;
+
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.netty.util.internal.StringUtil;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -45,76 +52,124 @@ public class JavaTest {
         return hex.toString();
     }
 
-    class B{
+    class B {
 
     }
 
+    public static String formatMessageTimeHHMM(long time) {
+        Date date = new Date(time);
+        return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(date);
+    }
+
+    public static String formatMessageTimeHHMM() {
+        Date date = new Date();
+        return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(date);
+    }
+
     public static void main(String[] args) {
-        List<String> l1 = new ArrayList<>();
-        List<String> l2 = l1;
-        List<String> l3 = new ArrayList<>();
-        l3.add("a");
-        l1.addAll(l3);
-        System.out.println(l2);
-        boolean bbb = true;
-        boolean b1 = false;
-        bbb |= b1;
-        System.out.println(bbb);
-        List<String> lista = new ArrayList<>();
-        lista.add("a");
-        lista.add(1, "b");
-        lista.add(lista.size(), "c");
-        for (String s : lista) {
-            System.out.println(s);
-        }
-        Class cls = null;
+//        System.out.println("blockingSingle: " + Observable.just(1, 2, 3).blockingSingle(4));
+//        long mUid = Long.MAX_VALUE;
+//        System.out.println("MAX_VALUE:" + mUid);
+//        System.out.println("1024:" + (int) ((mUid << 32 >> 32)));
+//        System.out.println("1024:" + (int) (mUid >> 32));
+//        System.out.println("mUid:" + (int) ((mUid << 32 >> 32) + (mUid >> 32)));
+        String json = "{\"23\":\"1\",\"24\":\"1\"}";
         try {
-            cls = Class.forName("java_.Hex");
-        } catch (ClassNotFoundException e) {
+            JSONObject jsonObject = new JSONObject(json);
+            Map map = (Map) jsonObject;
+            LogUtils.d("giftFlagMap :" + map.toString());
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
-            Hex b = (Hex)cls.newInstance();
-            System.out.println("hex : "+b);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
+        int i = 0;
+        while (i++ < 100) {
+            System.out.print(new Random().nextInt(3) + ", ");
         }
+        long mUid = 2147483646L;
+        System.out.println("MAX_VALUE:" + mUid);
+        System.out.println("1024:" + (int) ((mUid << 32 >> 32)));
+        System.out.println("1024:" + (int) (mUid >> 32));
+        System.out.println("mUid:" + (int) ((mUid << 32 >> 32) + (mUid >> 32)));
+        ArrayList<Long> reqUids = new ArrayList<>();
 
-        byte[] bytes = "sunmaofei".getBytes();
-        StringBuilder sb = new StringBuilder();
-        char[] hexes = HEXES.toCharArray();
-        for (int i = 0, len = bytes.length, v; i < len; i++) {
-            v = bytes[i] & 0xff;
-            System.out.println("v : " + v);
-            System.out.println((v >>> 4) + " : " + hexes[v >>> 4]);
-            System.out.println((v & 0x0f) + " : " + hexes[v & 0x0f]);
-            sb.append(hexes[v >>> 4]);
-            sb.append(hexes[v & 0x0f]);
-        }
-        System.out.println(sb.toString());
-
-
-
-        System.out.println(7 << 4 & 0xf0);
-        String hexString = "73756e6d616f666569";
-        bytes = hexString.getBytes();
-        byte[] back = new byte[bytes.length / 2];
-        for (int i = 0, len = bytes.length / 2; i < len; i++) {
-            back[i] = (byte) Integer.parseInt(hexString.substring(2 * i, 2 * i + 2), 16);
-        }
-        try {
-            System.out.println("back : " + new String(back, "utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-//        System.out.println(byteArrayToHex("sunmaofei".getBytes()));
-//        System.out.println(new BigInteger(1, "sunmaofei".getBytes()).toString(16));
-//        System.out.println(getHex("sunmaofei".getBytes()));
-//        System.out.println(bytesToHex("s".getBytes(), new char[200]));
-        System.out.println(toStringHex1("6e"));
+        byte b = 1;
+        System.out.println("1<< 1 -> " + (int) (1L << 32));
+        System.out.println("1<< 1 -> " + (int) (b << 32));
+//        for (long i = 1; i < 1002; i++) {
+//            reqUids.add(i);
+//        }
+//        System.out.println("===[" + reqUids.get(0) + ", " + reqUids.get(reqUids.size() - 1) + "]");
+//        for (int index = 0, count = (int) Math.ceil(reqUids.size() / 100.0); index < count; index++) {
+//            ArrayList<Long> arrayList = new ArrayList<>();
+//            arrayList.addAll(reqUids.subList(index * 100, index * 100 + 100 <= reqUids.size() ? index * 100 + 100 : reqUids.size()));
+//            System.out.println("[" + arrayList.get(0) + ", " + arrayList.get(arrayList.size() - 1) + "], len:" + arrayList.size());
+//        }
+//        System.out.println(formatMessageTimeHHMM());
+//        System.out.println(formatMessageTimeHHMM(System.currentTimeMillis() - 1000 * 60 * 12));
+//        List<String> l1 = new ArrayList<>();
+//        List<String> l2 = l1;
+//        List<String> l3 = new ArrayList<>();
+//        l3.add("a");
+//        l1.addAll(l3);
+//        System.out.println(l2);
+//        boolean bbb = true;
+//        boolean b1 = false;
+//        bbb |= b1;
+//        System.out.println(bbb);
+//        List<String> lista = new ArrayList<>();
+//        lista.add("a");
+//        lista.add(1, "b");
+//        lista.add(lista.size(), "c");
+//        for (String s : lista) {
+//            System.out.println(s);
+//        }
+//        Class cls = null;
+//        try {
+//            cls = Class.forName("java_.Hex");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            Hex b = (Hex) cls.newInstance();
+//            System.out.println("hex : " + b);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        }
+//
+//        byte[] bytes = "sunmaofei".getBytes();
+//        StringBuilder sb = new StringBuilder();
+//        char[] hexes = HEXES.toCharArray();
+//        for (int i = 0, len = bytes.length, v; i < len; i++) {
+//            v = bytes[i] & 0xff;
+//            System.out.println("v : " + v);
+//            System.out.println((v >>> 4) + " : " + hexes[v >>> 4]);
+//            System.out.println((v & 0x0f) + " : " + hexes[v & 0x0f]);
+//            sb.append(hexes[v >>> 4]);
+//            sb.append(hexes[v & 0x0f]);
+//        }
+//        System.out.println(sb.toString());
+//
+//
+//        System.out.println(7 << 4 & 0xf0);
+//        String hexString = "73756e6d616f666569";
+//        bytes = hexString.getBytes();
+//        byte[] back = new byte[bytes.length / 2];
+//        for (int i = 0, len = bytes.length / 2; i < len; i++) {
+//            back[i] = (byte) Integer.parseInt(hexString.substring(2 * i, 2 * i + 2), 16);
+//        }
+//        try {
+//            System.out.println("back : " + new String(back, "utf-8"));
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//
+////        System.out.println(byteArrayToHex("sunmaofei".getBytes()));
+////        System.out.println(new BigInteger(1, "sunmaofei".getBytes()).toString(16));
+////        System.out.println(getHex("sunmaofei".getBytes()));
+////        System.out.println(bytesToHex("s".getBytes(), new char[200]));
+//        System.out.println(toStringHex1("6e"));
     }
 
     private static String bytesToHex(@NonNull byte[] bytes, @NonNull char[] hexChars) {

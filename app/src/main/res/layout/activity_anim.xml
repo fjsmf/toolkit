@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content"
     xmlns:app="http://schemas.android.com/apk/lib/ss.com.toolkit">
 
@@ -26,30 +27,66 @@
             android:layout_alignRight="@+id/progressbar" />
 
     </RelativeLayout>
+
     <com.opensource.svgaplayer.SVGAImageView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         app:source="alarm.svga"
         app:autoPlay="true"
-        app:antiAlias="true"/>
+        app:antiAlias="true" />
+
     <com.yasic.bubbleview.BubbleView
         android:id="@+id/bubbleview"
         android:layout_gravity="center"
         android:background="#10ff00ff"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/peppers"/>
+        android:src="@drawable/peppers" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:onClick="showblur"
-        android:text="show blur"/>
+        android:text="show blur" />
+
     <ImageView
         android:id="@+id/iv_blur"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <ss.com.toolkit.view.AvatarViewWithFrame
+        android:id="@+id/headview"
+        android:layout_width="150dp"
+        android:layout_height="120dp" />
+
+    <com.opensource.svgaplayer.SVGAImageView
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:background="#af00"
+        app1:source="head_frame_dynamic.svga"
+        android:layout_marginTop="200dp"
+        app:loopCount="0"
+        app:autoPlay="true" />
+
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/svga_combo_label"
+        android:layout_width="87dp"
+        android:layout_height="62dp"
+        app:clearsAfterStop="true"
+        app:loopCount="0"
+        app:autoPlay="false"
+        android:background="#af00"
+        android:layout_marginTop="350dp"
+        app1:source="live_room_combo_label_effect.svga"/>
+
+    <ImageView
+        android:id="@+id/iv_christmas_socks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/christmas_socks"/>
 </FrameLayout>

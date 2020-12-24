@@ -3,6 +3,7 @@ apply plugin: 'com.google.protobuf'
 apply plugin: 'kotlin-android'
 //apply plugin: 'com.android.library'
 //apply plugin: 'com.jakewharton.butterknife'
+//apply
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -15,6 +16,29 @@ android {
         ndk {
             abiFilters 'armeabi-v7a'
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
+        exclude 'META-INF/LICENSE.txt'
+        exclude '.readme'
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/io.netty.versions.properties'
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+        exclude 'com/bumptech/glide/BuildConfig'
+
+        pickFirst 'lib/x86/libc++_shared.so'
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
     }
     buildTypes {
         release {
@@ -161,20 +185,20 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
 //    implementation 'com.google.protobuf:protobuf-java:3.4.0'
 //    implementation 'com.google.protobuf:protoc:3.4.0'
-    implementation 'com.google.protobuf:protobuf-lite:3.0.0'
+    implementation 'com.google.protobuf:protobuf-lite:3.0.1'
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
     // If you want to bind to Android-specific lifecycles
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.1.0'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
     // If you want pre-written Activities and Fragments you can subclass as providers
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.3'
     implementation 'com.squareup.wire:wire-runtime:2.3.0-RC1'
     implementation 'yasic.library.BubbleView:bubbleview:0.0.4'
     implementation 'com.orhanobut:logger:2.2.0'
@@ -182,12 +206,10 @@ dependencies {
     implementation 'io.netty:netty-all:4.0.24.Final'
 
     implementation 'com.amap.api:location:3.3.0'
-    implementation 'com.apkfuns.logutils:library:1.5.1.1'
+    implementation 'com.apkfuns.logutils:library:1.6.1'
     implementation 'com.amap.api:map2d:5.2.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation "io.reactivex.rxjava2:rxjava:2.1.16"
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
     implementation "com.squareup.retrofit2:adapter-rxjava:2.1.0"
 
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
@@ -197,10 +219,49 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation "com.github.bumptech.glide:annotations:4.9.0"
-    implementation "com.github.bumptech.glide:okhttp3-integration:4.9.0"
+    implementation 'com.github.yyued:SVGAPlayer-Android:2.4.2'
+//    implementation "com.github.bumptech.glide:okhttp3-integration:4.9.0"
 // config repo on productFlavors
 //    debugImplementation 'com.squareup.retrofit2:retrofit:2.4.0'
 //    huaweiImplementation 'com.squareup.retrofit2:retrofit:2.4.0'
 //    huaweiDomesticImplementation  'com.squareup.retrofit2:retrofit:2.4.0'
 //    huaweiDomesticDebugImplementation  'com.squareup.retrofit2:retrofit:2.4.0'
+
+}
+
+afterEvaluate {
+    assembleRelease.finalizedBy 'hello'
+}
+class GreetingPluginExtension {
+    String message = "Hello from GreetingPlugin"
+}
+
+
+class GreetingPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+        println "~~~~~~~~~GreetingPlugin~~~~~~~~~"
+        def extension = project.extensions.create('greeting', GreetingPluginExtension)
+
+        project.task('hello') {
+            doLast {
+                println extension.message
+            }
+        }
+
+        project.android.applicationVariants.all{
+            variant ->
+                variant.outputs.all{
+                    outputFileName = "${variant.name}-${variant.versionName}.apk"
+                    println "outputFileName : " + outputFileName
+                }
+        }
+    }
+}
+
+apply plugin: GreetingPlugin //应用插件，这样插件才能在gradle构建过程中生效。
+
+greeting {
+    message = "I am dynamic message"
 }

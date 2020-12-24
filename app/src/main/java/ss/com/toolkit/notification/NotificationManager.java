@@ -321,4 +321,61 @@ public class NotificationManager {
         }
         return str.substring(0, 7) + "...";
     }
+    private final static String INTENT_BUTTONID_TAG = "ButtonId";
+    private final static String REMOTEVIES_ID = "remoteViews_id";
+    private final static String CLICK_ACTION = "com.example.kingsoft.MyRemoteViews.CLICK_ACTION_ONE";
+    private final static int ACTION0 = 1;
+    private final static int ACTION1 = 1;
+    private final static int ACTION2 = 2;
+//    private void  createCustomRemoteViews(){
+//        final android.app.NotificationManager notificationManager = (android.app.NotificationManager) App.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
+//        //建立一个RemoteView的布局，并通过RemoteView加载这个布局
+//        final RemoteViews remoteViews = new RemoteViews(BaseApp.getInstance().getPackageName(), data.uiStyle == PushUIStyle._BUTTON ? R.layout.layout_push_operation_button : R.layout.layout_push_operation);
+//        //将pendingIntent作为Notification的intent，这样当点击其他部分时，也能实现跳转
+//        remoteViews.setTextViewText(R.id.tv_push_content_content, content);
+//        remoteViews.setTextViewText(R.id.tv_push_tittle, title);
+//        if (content != null && content.length() > 50) {
+//            remoteViews.setTextViewTextSize(R.id.tv_push_content_content, TypedValue.COMPLEX_UNIT_DIP, 12);
+//        }
+//        if (!isMIUI()) {
+//            remoteViews.setViewPadding(R.id.ll_push_bg, ScreenUtil.dp2px(15), 0, 0, 0);
+//        }
+//        final Notification notification = createNotification(remoteViews, content, title);
+//        if (isVersionO()) {
+//            NotificationChannel channel = new NotificationChannel(CHANNEL_CUSTOM,
+//                    CHANNEL_CUSTOM, android.app.NotificationManager.IMPORTANCE_HIGH);
+//            notificationManager.createNotificationChannel(channel);
+//        }
+//        notification.when = System.currentTimeMillis();
+//        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//        notification.contentIntent = productPendingIntent(intent, receiveByReceiver);
+//
+//        RemoteViews remoteViews = new RemoteViews(App.getInstance().getPackageName(), R.layout.my_remoteviews_button_layout);
+//
+//        Intent intent0 = new Intent(CLICK_ACTION);
+//        intent0.putExtra(INTENT_BUTTONID_TAG, ACTION0);
+//        PendingIntent pendingIntent0 = PendingIntent.getBroadcast(App.getInstance(), 1, intent0, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        Intent intent1 = new Intent(CLICK_ACTION);
+//        intent1.putExtra(INTENT_BUTTONID_TAG, ACTION1);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(App.getInstance(), 1, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+//        remoteViews.setOnClickPendingIntent(R.id.btn1, pendingIntent);
+//
+//        Intent intent2 = new Intent(CLICK_ACTION);
+//        intent2.putExtra(INTENT_BUTTONID_TAG, ACTION2);
+//        PendingIntent playIntent = PendingIntent.getBroadcast(App.getInstance(), 1, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+//        remoteViews.setOnClickPendingIntent(R.id.btn2, playIntent);
+//
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(App.getInstance());
+//        builder.setContent(remoteViews)
+//                .setContentIntent(pendingIntent0)
+//                .setTicker("正在播放") //
+//                .setPriority(Notification.PRIORITY_DEFAULT)
+//                .setOngoing(true)
+//                .setSmallIcon(R.drawable.ic_launcher);
+//
+//        Notification notification = builder.build();
+//        notification.flags = Notification.FLAG_ONGOING_EVENT;
+//        notification.notify(notifyId, notification);
+//    }
 }

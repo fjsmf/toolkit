@@ -41,5 +41,7 @@ public class NotificationActivity extends AppCompatActivity {
         drawable.setGradientType(GradientDrawable.RECTANGLE);
 //        btn.setImageBitmap(UIUtil.drawableToBitmap(drawable));
         btn.setImageDrawable(drawable);
+
+
     }
 }
