@@ -17,4 +17,5 @@
     <string name="text_stars">%d \nStars</string>
     <string name="text_watchers">%d \nWatchers</string>
     <string name="text_forks">%d \nForks</string>
+    <string name="opengl">opengl 初体验</string>
 </resources>

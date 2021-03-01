@@ -34,6 +34,7 @@ import com.apkfuns.logutils.LogUtils;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.ss.opengl.OpenglMainActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -316,7 +317,8 @@ public class MainActivity extends BaseActivity {
                     new Item("editView", EditTextActivity.class),
                     new Item("plane shoot", PlaneShootActivity.class),
                     new Item("bezier gift", StarViewActivity.class),
-                    new Item("path anim", PathActivity.class)
+                    new Item("path anim", PathActivity.class),
+                    new Item("opengl", OpenglMainActivity.class)
                 };
             @NonNull
             @Override

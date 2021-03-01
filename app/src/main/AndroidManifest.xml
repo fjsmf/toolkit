@@ -94,6 +94,8 @@
 
         <activity android:name=".ui.bezier.starview.StarViewActivity" />
         <activity android:name=".anim.PathActivity" />
+        <activity android:name="com.ss.opengl.OpenglMainActivity" />
+        <activity android:name="com.ss.opengl.OpenglWindowActivity" />
     </application>
 
 </manifest>

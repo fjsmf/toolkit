@@ -95,6 +95,12 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 //    flavorDimensions "market"/*, "region"*/
     /*productFlavors {
         huawei {
