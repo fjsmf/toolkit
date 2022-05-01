@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/push_right_out</item>
+    </style>
+    <style name="AppTheme.custom">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentTransitions">true</item>
+        <!--<item name="android:windowSharedElementEnterTransition"></item>-->
+    </style>
+</resources>

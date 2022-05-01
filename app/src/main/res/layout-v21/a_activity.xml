@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View
+        android:layout_width="1px"
+        android:layout_height="1px"
+        app:layout_constraintTop_toTopOf="parent"
+        android:transitionName="transitionPoint"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <FrameLayout
+        android:id="@+id/f1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ss.com.toolkit.transitions.CustomSurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:transitionName="transitionSV"
+            app:layout_constraintTop_toTopOf="parent" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/f2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="350dp">
+    </FrameLayout>
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/f1"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:onClick="toBActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="enter B activity" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/f1"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:onClick="toCActivity"
+        app:layout_constraintStart_toEndOf="@+id/btn1"
+        android:text="enter C activity" />
+
+</android.support.constraint.ConstraintLayout>

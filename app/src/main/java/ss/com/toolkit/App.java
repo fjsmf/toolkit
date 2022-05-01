@@ -14,11 +14,14 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
+
+import ss.com.toolkit.util.ActivityStack;
 
 public class App extends MultiDexApplication {
     private static App instance;
 
-    public static App getInstance(){
+    public static App getInstance() {
         return instance;
     }
 
@@ -48,7 +51,8 @@ public class App extends MultiDexApplication {
             }
         });
         initSVGACache();
-
+        LogUtils.tag("nadiee").d("ActivityStack.Companion.getInstance():" + ActivityStack.Companion.getInstance());
+        ActivityStack.Companion.getInstance().init(this);
     }
 
     private void initSVGACache() {

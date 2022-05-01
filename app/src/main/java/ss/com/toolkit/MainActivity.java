@@ -1,32 +1,42 @@
 package ss.com.toolkit;
 
+import android.animation.ObjectAnimator;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.content.pm.Signature;
 import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +44,7 @@ import com.apkfuns.logutils.LogUtils;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.google.gson.Gson;
 import com.ss.opengl.OpenglMainActivity;
 
 import java.io.BufferedReader;
@@ -45,6 +56,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -56,11 +68,15 @@ import ss.com.toolkit.anim.AnimActivity;
 import ss.com.toolkit.anim.PathActivity;
 import ss.com.toolkit.base.BaseActivity;
 import ss.com.toolkit.device.DeviceActivity;
+import ss.com.toolkit.immersive.ImmersiveActivity;
+import ss.com.toolkit.immersive.ImmersiveActivity1;
 import ss.com.toolkit.location.LocationActivity;
 import ss.com.toolkit.net.NetActivity;
 import ss.com.toolkit.notification.NotificationActivity;
 import ss.com.toolkit.record.AudioRecordActivity;
+import ss.com.toolkit.recyclerview.RecyclerviewTestActivity;
 import ss.com.toolkit.slidebar.SideBarDemoActivity;
+import ss.com.toolkit.transitions.AActivity;
 import ss.com.toolkit.ui.TraceActivity;
 import ss.com.toolkit.ui.bezier.starview.StarViewActivity;
 import ss.com.toolkit.ui.planeshoot.PlaneShootActivity;
@@ -69,18 +85,56 @@ import ss.com.toolkit.util.LocationUtils;
 import ss.com.toolkit.util.ScreenUtil;
 import ss.com.toolkit.util.ToastUtil;
 import ss.com.toolkit.util.toast.ToastCompat;
+import ss.com.toolkit.view.AutoTextView;
 import ss.com.toolkit.view.AvatarViewWithFrame;
+import ss.com.toolkit.view.LiveGameAutoTextView;
+import ss.com.toolkit.view.expandabletextview.TextViewExpandable;
 
 public class MainActivity extends BaseActivity {
+    final static String TAG = "nadiee";
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rootView)
     CoordinatorLayout rootView;
+    @BindView(R.id.tv_num)
+    LiveGameAutoTextView tv_num;
+    @BindView(R.id.cb_mute)
+    CheckBox cb_mute;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LogUtils.tag("nadiee").d("time:" + System.currentTimeMillis());
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
+
+        LinearLayout linearLayout = findViewById(R.id.topic);
+        View view = LayoutInflater.from(this).inflate(R.layout.topic_item, linearLayout, false);
+        TextView textView = view.findViewById(R.id.tv_topic);
+        textView.setText("热榜第999名");
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ScreenUtil.dp2px(24));
+        lp.rightMargin = ScreenUtil.dp2px(8);
+        linearLayout.addView(view, lp);
+
+        view = LayoutInflater.from(this).inflate(R.layout.topic_item, linearLayout, false);
+        textView = view.findViewById(R.id.tv_topic);
+        textView.setText("这里是话题这这里是这里是话题，这里是话题，是话题这里是话题");
+//        textView.setMaxWidth(ScreenUtil.dp2px(100));
+//        textView.setMaxWidth(ScreenUtil.dp2px(203));
+        textView.setSelected(true);
+        linearLayout.addView(view);
+        View finalView = view;
+        TextView finalTextView = textView;
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                finalTextView.setMaxWidth(finalView.getWidth() - ScreenUtil.dp2px(40));
+            }
+        });
+
+
+
         Log.i("nadiee", "onCreate-1");
         if (!isTaskRoot()) {
             Log.i("nadiee", "onCreate-is not TaskRoot");
@@ -91,8 +145,16 @@ public class MainActivity extends BaseActivity {
                 return;
             }
         }
+        cb_mute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean check = cb_mute.isChecked();
+                LogUtils.tag("cb_mute").d("check:" + check);
+//                cb_mute.setChecked(!check);
+            }
+        });
         Log.i("nadiee", "onCreate-is TaskRoot");
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
         rootView.removeView(toolbar);
         View.OnUnhandledKeyEventListener a;
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -101,7 +163,7 @@ public class MainActivity extends BaseActivity {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
         bitmapDrawable.setBounds(0, 0, bitmapDrawable.getIntrinsicWidth(), bitmapDrawable.getIntrinsicHeight());
         ImageSpan imageSpan = new ImageSpan(bitmapDrawable);
-        fab.setOnClickListener(view -> {
+        fab.setOnClickListener(view1 -> {
             Observable.interval(0, 2, TimeUnit.SECONDS)
                     .subscribe(new Observer<Long>() {
                         @Override
@@ -141,8 +203,8 @@ public class MainActivity extends BaseActivity {
         });
 
         initView();
-        ToastUtil.showToast("success!!!");
-        ToastUtil.showRedTopToast("success!!!");
+//        ToastUtil.showToast("success!!!");
+//        ToastUtil.showRedTopToast("success!!!");
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -208,10 +270,35 @@ public class MainActivity extends BaseActivity {
 //        }).start();
         //启动悬浮窗Service
 //        startService(new Intent(MainActivity.this, FloatWindowService.class));
+        TextView tv_name = findViewById(R.id.tv_name);
+        tv_name.setSelected(true);
 
+        // 创建快捷方式
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            testShortCut(this);
+        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            testShortCut(this);
+//        }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void testShortCut(Context context) {
+        ShortcutManager shortcutManager = (ShortcutManager) context.getSystemService(Context.SHORTCUT_SERVICE);
+        boolean requestPinShortcutSupported = shortcutManager.isRequestPinShortcutSupported();
 
+        if (requestPinShortcutSupported) {
+            Intent shortcutInfoIntent = new Intent(context.getApplicationContext(), ImmersiveActivity.class);
+            shortcutInfoIntent.setAction(Intent.ACTION_VIEW);
+            ShortcutInfo info = new ShortcutInfo.Builder(context, "tzw")
+                    .setIcon(Icon.createWithResource(context, R.drawable.yuanbao))
+                    .setShortLabel("O系统短")
+                    .setLongLabel("O系统长")
+                    .setIntent(shortcutInfoIntent)
+                    .build();
+            shortcutManager.requestPinShortcut(info, null);
+        }
+    }
 
     public void datePicker(View view) {
         Calendar selectedDate = Calendar.getInstance();
@@ -279,6 +366,26 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
+        SpannableStringBuilder ssb = new SpannableStringBuilder();
+        SpannableString heartSs = new SpannableString(" 1000");
+        Drawable heartDrawable = App.getInstance().getResources().getDrawable(R.drawable.ic_subscribe_dark);
+        heartDrawable.setBounds(0, 0, ScreenUtil.dp2px(8), ScreenUtil.dp2px(7f));
+        heartSs.setSpan(new ImageSpan(heartDrawable, ImageSpan.ALIGN_BASELINE), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        ssb.append(heartSs);
+
+        CharSequence[] strings = {ssb, "2条动态"};
+        tv_num.setText(strings);
+        tv_num.setAutoScroll(true);
+        tv_num.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                LogUtils.tag("nadiee").d("onClick");
+//                tv_num.setText("1234");
+                tv_num.setAutoScroll(false);
+            }
+        });
+
+
 
         AndroidSchedulers.mainThread().scheduleDirect(new Runnable() {
             @Override
@@ -318,7 +425,11 @@ public class MainActivity extends BaseActivity {
                     new Item("plane shoot", PlaneShootActivity.class),
                     new Item("bezier gift", StarViewActivity.class),
                     new Item("path anim", PathActivity.class),
-                    new Item("opengl", OpenglMainActivity.class)
+                    new Item("opengl", OpenglMainActivity.class),
+                    new Item("activity Transition", AActivity.class),
+                    new Item("immersive", ImmersiveActivity.class),
+                    new Item("immersive1", ImmersiveActivity1.class),
+                    new Item("recyclerview", RecyclerviewTestActivity.class)
                 };
             @NonNull
             @Override
@@ -344,6 +455,10 @@ public class MainActivity extends BaseActivity {
                 return list.length;
             }
         });
+
+        TextViewExpandable tv_expand = findViewById(R.id.tv_expand);
+        tv_expand.setTextContent("废话少说,先上效果文字可自由配置,字体颜色可定义,可定义首次展示状态等等。集成简单,高度可定制化整个封装在ExpandableTextView中。源码会在文末贴出链接Android仿小红书自定义展开起的TextView_像程序那转换一下思路,会发现其实这个效果与TextView设置android:maxLines之后,再设置android:ellipsize为end很相似,只是 … 替换换成了 …展开 ,遗憾的是系统并");
+
 
     }
 
@@ -387,6 +502,14 @@ public class MainActivity extends BaseActivity {
             });
         } else {
         }
+    }
+
+    public void onClick1(View view) {
+        View root_view = findViewById(R.id.root_view);
+        ObjectAnimator slideTranslationY = ObjectAnimator.ofFloat(root_view, View.TRANSLATION_Y, 0F, -ScreenUtil.dp2px(100));
+        slideTranslationY.setInterpolator(new DecelerateInterpolator());
+        slideTranslationY.setDuration(330);
+        slideTranslationY.start();
     }
 
     class Item{
@@ -494,4 +617,5 @@ public class MainActivity extends BaseActivity {
             headView = itemView.findViewById(R.id.iv_profile);
         }
     }
+
 }

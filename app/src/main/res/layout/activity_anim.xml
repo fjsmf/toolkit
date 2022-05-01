@@ -70,6 +70,7 @@
         android:background="#af00"
         app1:source="head_frame_dynamic.svga"
         android:layout_marginTop="200dp"
+        android:visibility="gone"
         app:loopCount="0"
         app:autoPlay="true" />
 
@@ -80,13 +81,78 @@
         app:clearsAfterStop="true"
         app:loopCount="0"
         app:autoPlay="false"
+        android:visibility="gone"
         android:background="#af00"
         android:layout_marginTop="350dp"
-        app1:source="live_room_combo_label_effect.svga"/>
+        app1:source="live_room_combo_label_effect.svga" />
 
     <ImageView
         android:id="@+id/iv_christmas_socks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/christmas_socks"/>
+        android:src="@drawable/christmas_socks" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="500dp"
+        android:background="#ff0000">
+
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_alignParentEnd="true"
+            android:layout_width="200dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00ff00"
+                android:layout_toStartOf="@+id/tv_1" />
+
+            <ImageView
+                android:id="@+id/tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_launcher" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/sub_layout"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:background="#ff0000"
+        android:layout_gravity="end"
+        android:layout_marginTop="400dp">
+        <TextView
+            android:id="@+id/tv_sub"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_gravity="end"
+            android:background="#66ffffff"
+            android:text="sub"/>
+    </FrameLayout>
+    <Button
+        android:id="@+id/tv_sub_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_gravity="end"
+        android:layout_marginTop="360dp"
+        android:text="change"/>
+    <ss.com.toolkit.anim.MarqueeView
+        android:id="@+id/marquee_view"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="550dp"
+        android:layout_height="50dp"/>
 </FrameLayout>

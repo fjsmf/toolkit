@@ -12,6 +12,7 @@ buildscript {
             url "http://localhost:8081/nexus/content/repositories/releases"
         }
         maven { url 'https://jitpack.io' }
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'

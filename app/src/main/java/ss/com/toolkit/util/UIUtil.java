@@ -4,8 +4,32 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 public class UIUtil {
+
+    /**
+     * 获取在整个屏幕内的绝对坐标
+     * @param view
+     * @return
+     */
+    public static int[] getLocationInScreen(View view) {
+        int[] location = new int[2] ;
+        view.getLocationOnScreen(location);
+        return location;
+    }
+
+    /**
+     * 获取在当前窗口内的绝对坐标
+     * @param view
+     * @return
+     */
+    public static int[] getLocationInWindow(View view) {
+        int[] location = new int[2] ;
+        view.getLocationInWindow(location);
+        return location;
+    }
+
     public static Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();

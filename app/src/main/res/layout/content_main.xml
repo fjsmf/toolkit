@@ -3,16 +3,137 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
+    android:id="@+id/root_view"
+    android:background="#f0f"
+    android:clipChildren="true"
     tools:showIn="@layout/activity_main">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerv_view"
         android:layout_marginTop="50dp"
-        app1:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="450dp" />
+
+
+    <ImageView
+        android:id="@+id/iv_avatar_subscribe"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/blue_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_live_game_subscribe_red"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:background="@drawable/live_room_game_subscribe_red"
+        app:layout_constraintEnd_toEndOf="@+id/iv_avatar_subscribe"
+        app:layout_constraintTop_toTopOf="@+id/iv_avatar_subscribe"
+        android:visibility="visible" />
+
+    <ss.com.toolkit.view.LiveGameAutoTextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="450dp"
+        android:layout_marginStart="9dp"
+        android:background="@color/blue_color"
+        android:textSize="12sp"
+        tools:text="1000" />
+
+    <SeekBar
+        android:id="@+id/pl_video_progress"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="500dp"
+        android:layout_height="2dp"
+        android:progress="50"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:thumb="@null"
+        android:progressDrawable="@drawable/progress_drawable" />
+    <!-- 静音按钮 -->
+    <CheckBox
+        android:id="@+id/cb_mute"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:button="@drawable/live_room_checkbox_mute"
+        android:focusable="false"
+        android:checked="false"
+        android:scaleType="centerInside"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="550dp"
+        android:background="#ff0000"
+        android:padding="2dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="20dp" />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="570dp"
+        android:gravity="start"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="1"
+        android:scrollHorizontally="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:singleLine="true"
+        android:textSize="11dp"
+        android:text="1234567qwertyu"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ss.com.toolkit.view.expandabletextview.TextViewExpandable
+        android:id="@+id/tv_expand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="105dp"
+        android:background="#b2000000"
+        android:textColor="@color/white"
+        app:et_max_line="3"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/topic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="103dp"
+        android:layout_marginBottom="120dp"/>
+
+    <FrameLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#000"
+        android:onClick="onClick1"
+        app:layout_constraintTop_toBottomOf="@+id/topic">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:textColor="#fff"
+            android:textSize="16dp"
+            android:layout_gravity="bottom"
+            app:layout_constraintTop_toBottomOf="@+id/bottom"
+            android:text="111111111111111111111111111111"/>
+    </FrameLayout>
 
 
 </android.support.constraint.ConstraintLayout>

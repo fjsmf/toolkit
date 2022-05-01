@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/push_right_out</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -32,5 +35,8 @@
         <item name="android:windowNoTitle">true</item><!--无标题-->
         <item name="android:backgroundDimEnabled">true</item><!--模糊，背景透明是这个-->
         <item name="android:windowAnimationStyle">@style/DialogPopupAnim</item>
+    </style>
+    <style name="AppTheme.custom">
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

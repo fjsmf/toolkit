@@ -26,6 +26,66 @@
     <!-- 读取缓存数据 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!-- shortcut -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+
+    <uses-sdk tools:overrideLibrary="com.facebook.react" />
+
+
+
+    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
+    <!-- 添加快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <!-- 移除快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <!-- 查询快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+
+
+    <uses-permission android:name="com.android.launcher2.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.android.launcher2.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="org.adw.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="org.adw.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.htc.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.qihoo360.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.qihoo360.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.lge.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.lge.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="net.qihoo.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="net.qihoo.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="org.adwfreak.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="org.adwfreak.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="org.adw.launcher_donut.permission.READ_SETTINGS" />
+    <uses-permission android:name="org.adw.launcher_donut.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.huawei.launcher3.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.huawei.launcher3.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.fede.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.fede.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.sec.android.app.twlauncher.settings.READ_SETTINGS" />
+    <uses-permission android:name="com.sec.android.app.twlauncher.settings.WRITE_SETTINGS" />
+    <uses-permission android:name="com.anddoes.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.anddoes.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.tencent.qqlauncher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.tencent.qqlauncher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.huawei.launcher2.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.huawei.launcher2.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.android.mylauncher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.android.mylauncher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.ebproductions.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.ebproductions.android.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.oppo.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.oppo.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.huawei.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.huawei.android.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="telecom.mdesk.permission.READ_SETTINGS" />
+    <uses-permission android:name="telecom.mdesk.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="dianxin.permission.ACCESS_LAUNCHER_DATA" />
+
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -48,38 +108,38 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!-- 必须加上这个。否则无法直接使用自定的action -->
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".anim.AnimActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".anim.AnimActivity"/>
         <activity
             android:name=".net.NetActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".device.DeviceActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".location.LocationActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".slidebar.SideBarDemoActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".record.AudioRecordActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".ui.TraceActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".ui.wechat.WechatListActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".notification.NotificationActivity"
             android:process=":notify" />
@@ -96,6 +156,27 @@
         <activity android:name=".anim.PathActivity" />
         <activity android:name="com.ss.opengl.OpenglMainActivity" />
         <activity android:name="com.ss.opengl.OpenglWindowActivity" />
+
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <!--<activity android:name=".transitions.AActivity" android:theme="@style/AppTheme.custom"/>
+        <activity android:name=".transitions.BActivity" android:theme="@style/AppTheme.custom"/>
+        <activity android:name=".transitions.CActivity" android:theme="@style/AppTheme.custom"/>-->
+        <activity android:name=".transitions.AActivity"/>
+        <activity android:name=".transitions.BActivity"/>
+        <activity android:name=".transitions.CActivity" android:theme="@style/AppTheme.custom"/>
+        <activity android:name="ss.com.toolkit.immersive.ImmersiveActivity"/>
+        <activity android:name="ss.com.toolkit.immersive.ImmersiveActivity1"/>
+
+        <receiver
+            android:name=".shortcut.AutoCreateBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <!--<intent-filter>
+                <action android:name="com.shortcut.core.auto_create" />
+            </intent-filter>-->
+        </receiver>
+        <activity android:name="ss.com.toolkit.recyclerview.RecyclerviewTestActivity"/>
+
     </application>
 
 </manifest>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_marginTop="200dp"
+        android:layout_height="300dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:id="@+id/fake_image"
+        android:layout_width="match_parent"
+        android:layout_marginTop="200dp"
+        android:layout_height="300dp"
+        android:scaleType="fitXY"
+        android:transitionName="transitionSV"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <!--<TextureView
+        android:id="@+id/texture_view"
+        android:layout_width="match_parent"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="200dp"
+        android:layout_height="200dp"
+        android:transitionName="transitionSV"
+        app:layout_constraintTop_toTopOf="parent"/>-->
+</android.support.constraint.ConstraintLayout>

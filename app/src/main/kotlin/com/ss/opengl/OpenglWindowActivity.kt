@@ -9,22 +9,25 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import android.view.TextureView
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
 import com.apkfuns.logutils.LogUtils
 import ss.com.toolkit.R
 
 var surfaceView: SurfaceView? = null
-var isExit: Boolean? = null
+var isExit: Boolean? = false
 
 class OpenglWindowActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LogUtils.tag("nadiee").d("OpenglWindowActivity")
         setContentView(R.layout.opengl_window);
         initView();
     }
 
     private fun initView() {
+        val textureView: TextureView? = null
         surfaceView = findViewById(R.id.surfaceView)
         surfaceView?.holder?.addCallback(object : SurfaceHolder.Callback {
             var holder: SurfaceHolder? = null
@@ -69,9 +72,9 @@ class OpenglWindowActivity : AppCompatActivity() {
                     holder?.let {
                         synchronized(it) {
                             c?.drawColor(Color.BLACK)//设置画布背景颜色
-                            var p: Paint = Paint() //创建画笔
+                            var p = Paint() //创建画笔
                             p.setColor(Color.WHITE)
-                            var r: Rect = Rect(100, 50, 300, 250)
+                            var r = Rect(100, 50, 300, 250)
                             c?.drawRect(r, p);
                             c?.drawText("这是第" + (count++) + "秒", 100f, 310f, p)
                             Thread.sleep(1000);//睡眠时间为1秒
@@ -84,7 +87,6 @@ class OpenglWindowActivity : AppCompatActivity() {
                         holder?.unlockCanvasAndPost(c);//结束锁定画图，并提交改变。
                     }
                 }
-                holder?.unlockCanvasAndPost(c)
             }
         }
     }

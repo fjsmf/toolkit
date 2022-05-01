@@ -1,38 +1,28 @@
 package java_;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.apkfuns.logutils.LogUtils;
 
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.math.RoundingMode;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.netty.util.internal.StringUtil;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
-import rx.Subscription;
-import rx.functions.Action1;
 import ss.com.toolkit.net.IpInfo;
 
 public class JavaTest {
@@ -67,34 +57,51 @@ public class JavaTest {
     }
 
     public static void main(String[] args) {
+        String key = "[猜拳-2]";
+        int num = Integer.parseInt(key.substring(key.lastIndexOf("-") + 1, key.indexOf("]")));
+
+        System.out.println(key.matches("^\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+-[0-9]+\\]$") + ",---num:" + num);
+        key = key.replaceAll("-[0-9]*", "");
+        System.out.println(key);
+        key = "勺子-122";
+        System.out.println(key.matches("^[a-zA-Z0-9\\u4e00-\\u9fa5]+-[0-9]+$"));
+
+        float a = 1 / 100f;
+        DecimalFormat df = new DecimalFormat("0.00");
+        String aaa = df.format(1 / 100f);
+        double da = Double.parseDouble(aaa);
+        int price = 1;
+        double bigd = BigDecimal.valueOf(price).divide(BigDecimal.valueOf(100), 2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        System.out.println("" + a + " -> double:" + aaa + ", da:" + da + ", BigD:" + bigd);
+
 //        System.out.println("blockingSingle: " + Observable.just(1, 2, 3).blockingSingle(4));
 //        long mUid = Long.MAX_VALUE;
 //        System.out.println("MAX_VALUE:" + mUid);
 //        System.out.println("1024:" + (int) ((mUid << 32 >> 32)));
 //        System.out.println("1024:" + (int) (mUid >> 32));
 //        System.out.println("mUid:" + (int) ((mUid << 32 >> 32) + (mUid >> 32)));
-        String json = "{\"23\":\"1\",\"24\":\"1\"}";
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            Map map = (Map) jsonObject;
-            LogUtils.d("giftFlagMap :" + map.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        int i = 0;
-        while (i++ < 100) {
-            System.out.print(new Random().nextInt(3) + ", ");
-        }
+//        String json = "{\"23\":\"1\",\"24\":\"1\"}";
+//        try {
+//            JSONObject jsonObject = new JSONObject(json);
+//            Map map = (Map) jsonObject;
+//            LogUtils.d("giftFlagMap :" + map.toString());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        int i = 0;
+//        while (i++ < 100) {
+//            System.out.print(new Random().nextInt(3) + ", ");
+//        }
         long mUid = 2147483646L;
-        System.out.println("MAX_VALUE:" + mUid);
-        System.out.println("1024:" + (int) ((mUid << 32 >> 32)));
-        System.out.println("1024:" + (int) (mUid >> 32));
-        System.out.println("mUid:" + (int) ((mUid << 32 >> 32) + (mUid >> 32)));
+//        System.out.println("MAX_VALUE:" + mUid);
+//        System.out.println("1024:" + (int) ((mUid << 32 >> 32)));
+//        System.out.println("1024:" + (int) (mUid >> 32));
+//        System.out.println("mUid:" + (int) ((mUid << 32 >> 32) + (mUid >> 32)));
         ArrayList<Long> reqUids = new ArrayList<>();
 
         byte b = 1;
-        System.out.println("1<< 1 -> " + (int) (1L << 32));
-        System.out.println("1<< 1 -> " + (int) (b << 32));
+//        System.out.println("1<< 1 -> " + (int) (1L << 32));
+//        System.out.println("1<< 1 -> " + (int) (b << 32));
 //        for (long i = 1; i < 1002; i++) {
 //            reqUids.add(i);
 //        }
@@ -170,6 +177,152 @@ public class JavaTest {
 ////        System.out.println(getHex("sunmaofei".getBytes()));
 ////        System.out.println(bytesToHex("s".getBytes(), new char[200]));
 //        System.out.println(toStringHex1("6e"));
+
+        int cpuNums = Runtime.getRuntime().availableProcessors();  //获取当前系统的CPU 数目
+
+//        newFixedThreadPool 和 newSingleThreadExecutor都是固定线程池数量
+
+//        ExecutorService executorService = Executors.newFixedThreadPool(cpuNums * 2); //ExecutorService通常根据系统资源情
+
+
+        /*cpu numbers:8
+        0 start
+        2 start
+        1 start
+        4 start
+        3 start
+        2 end
+        0 end
+        1 end
+        5 start
+        4 end
+        7 start
+        3 end
+        6 start
+        8 start
+        9 start
+        8 end
+        5 end
+        9 end
+        6 end
+        7 end*/
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        /*
+        * 0 start
+        0 end
+        1 start
+        1 end
+        2 start
+        2 end
+        3 start
+        3 end
+        4 start
+        4 end
+        5 start
+        5 end
+        6 start
+        6 end
+        7 start
+        7 end
+        8 start
+        8 end
+        9 start
+        9 end
+        * */
+//        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        System.out.println("cpu numbers:" + cpuNums);
+        for (int i = 0; i < 10; i++) {
+//            executorService.execute(new TestRunnable(i));
+        }
+
+        Future<Object> future = executorService.submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                System.out.println("1 ");
+                return "123";
+            }
+        });
+        System.out.println(future.isCancelled());
+//        future.cancel(true);
+        System.out.println(future.isCancelled());
+        try {
+            System.out.println(future.get()); // cancel后抛异常
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        executorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("na ");
+            }
+        }, "nadiee");
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("runnable");
+            }
+        });
+        executorService.shutdown();
+        // Wait until all threads are finish
+        try {
+            executorService.awaitTermination(10000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(10);
+        executor.scheduleWithFixedDelay(
+                new Runnable() {
+                    @Override
+                    public void run() {
+//                        System.out.println("scheduleWithFixedDelay runnable" + System.currentTimeMillis());
+                    }
+                },
+                0,
+                1000,
+                TimeUnit.MILLISECONDS);
+        executor.shutdown();
+        System.out.println("main end");
+    }
+
+    static class TestRunnable implements Runnable {
+
+        private int runnableIndex;
+
+        public TestRunnable(int runnableIndex) {
+            this.runnableIndex = runnableIndex;
+        }
+
+        @Override
+        public void run() {
+            System.out.println(runnableIndex + " start " + Thread.currentThread());
+            try {
+//                printThreads();
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(runnableIndex + " end ");
+        }
+
+        private void printThreads() {
+            ThreadGroup currentGroup = Thread.currentThread().getThreadGroup();
+            int noThreads = currentGroup.activeCount();
+            Thread[] lstThreads = new Thread[noThreads];
+            currentGroup.enumerate(lstThreads);
+            for (int i = 0; i < noThreads; i++) {
+                System.out.println("线程号：" + i + " = " + lstThreads[i].getName());
+            }
+        }
     }
 
     private static String bytesToHex(@NonNull byte[] bytes, @NonNull char[] hexChars) {
