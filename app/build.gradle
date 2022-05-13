@@ -77,19 +77,19 @@ android {
         variant.outputs.all { output ->
             outputFileName = "toolkit-${variant.name}-${variant.buildType.name}-${defaultConfig.versionName}.apk"
             println "=====outputFileName :" + outputFileName
-            output.processManifest.doLast {
-                println "------------output.processManifest.doLast------------"
-                // Stores the path to the maifest.
-                String manifestPath = "$manifestOutputDirectory/AndroidManifest.xml"
-                println "manifestPath: " + manifestPath
-                // Stores the contents of the manifest.
-                def manifestContent = file(manifestPath).getText()
-                // Changes the version code in the stored text.
-                manifestContent = manifestContent.replace('android:value="debug"',
-                        String.format('android:value="%s"', "google"))
-                // Overwrites the manifest with the new text.
-                file(manifestPath).write(manifestContent, "UTF-8")
-            }
+//            output.processManifest.doLast {
+//                println "------------output.processManifest.doLast------------"
+//                // Stores the path to the maifest.
+//                String manifestPath = "$manifestOutputDirectory/AndroidManifest.xml"
+//                println "manifestPath: " + manifestPath
+//                // Stores the contents of the manifest.
+//                def manifestContent = file(manifestPath).getText()
+//                // Changes the version code in the stored text.
+//                manifestContent = manifestContent.replace('android:value="debug"',
+//                        String.format('android:value="%s"', "google"))
+//                // Overwrites the manifest with the new text.
+//                file(manifestPath).write(manifestContent, "UTF-8")
+//            }
         }
     }
     lintOptions {
@@ -185,6 +185,7 @@ protobuf {
 }
 
 dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
@@ -215,8 +216,10 @@ dependencies {
     implementation 'com.amap.api:location:3.3.0'
     implementation 'com.apkfuns.logutils:library:1.6.1'
     implementation 'com.amap.api:map2d:5.2.0'
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+//    implementation 'com.jakewharton:butterknife:8.8.1'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:9.0.0-rc2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc2'
     implementation "com.squareup.retrofit2:adapter-rxjava:2.1.0"
 
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'

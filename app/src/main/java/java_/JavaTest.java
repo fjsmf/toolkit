@@ -1,5 +1,6 @@
 package java_;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 
@@ -57,6 +58,12 @@ public class JavaTest {
     }
 
     public static void main(String[] args) {
+        String url = "http://v-replay-hw.cdn.huya.com/record/huyalive/1259515661837-1259515661837-4682562792811659264-2519031447130-10057-A-0-1_2000/2021-04-28-11:30:05_2021-04-28-14:39:14.m3u8?bitrate=1953&client=81&definition=1300&pid=1259515661837&scene=vod&vid=498127429";
+        Uri uri = Uri.parse(url);
+        String vid = uri.getQueryParameter("vid");
+        String definition = uri.getQueryParameter("definition");
+        System.out.printf("vid:%s, definition:%s", vid, definition);
+
         String key = "[猜拳-2]";
         int num = Integer.parseInt(key.substring(key.lastIndexOf("-") + 1, key.indexOf("]")));
 
