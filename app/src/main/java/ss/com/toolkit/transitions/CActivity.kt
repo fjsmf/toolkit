@@ -157,7 +157,7 @@ class CActivity : BaseActivity(), TextureView.SurfaceTextureListener {
         }
     }
 
-    override fun onSurfaceTextureAvailable(surface: SurfaceTexture?, width: Int, height: Int) {
+    override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
         mSurface = Surface(surface)
         play(File(Environment.getExternalStorageDirectory(), "DCIM/Camera/1234.mp4"))
         //        new Handler().postDelayed(new Runnable() {
@@ -182,17 +182,17 @@ class CActivity : BaseActivity(), TextureView.SurfaceTextureListener {
 //        }, 2000, TimeUnit.MICROSECONDS)
     }
 
-    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture?, width: Int, height: Int) {
+    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
     }
 
-    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture?): Boolean {
+    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
         mSurface = null;
         mMediaPlayer?.stop()
         mMediaPlayer?.release()
         return true;
     }
 
-    override fun onSurfaceTextureUpdated(surface: SurfaceTexture?) {
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
     }
 
     //重新计算video的显示位置，裁剪后全屏显示

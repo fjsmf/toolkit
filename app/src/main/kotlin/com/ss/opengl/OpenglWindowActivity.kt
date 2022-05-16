@@ -31,18 +31,23 @@ class OpenglWindowActivity : AppCompatActivity() {
         surfaceView = findViewById(R.id.surfaceView)
         surfaceView?.holder?.addCallback(object : SurfaceHolder.Callback {
             var holder: SurfaceHolder? = null
-            override fun surfaceCreated(holder: SurfaceHolder?) {
+            override fun surfaceCreated(holder: SurfaceHolder) {
                 LogUtils.tag("nadiee").d("surfaceCreated")
                 this.holder = holder;
                 GLThread(holder).start()
             }
 
-            override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
+            override fun surfaceChanged(
+                holder: SurfaceHolder,
+                format: Int,
+                width: Int,
+                height: Int
+            ) {
                 LogUtils.tag("nadiee").d("surfaceChanged")
                 GLES20.glViewport(0, 0, width, height)
             }
 
-            override fun surfaceDestroyed(holder: SurfaceHolder?) {
+            override fun surfaceDestroyed(holder: SurfaceHolder) {
                 LogUtils.tag("nadiee").d("surfaceDestroyed")
             }
         })

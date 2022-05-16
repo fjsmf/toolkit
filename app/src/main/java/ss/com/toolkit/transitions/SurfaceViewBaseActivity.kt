@@ -38,18 +38,22 @@ open class SurfaceViewBaseActivity: BaseActivity() {
         initView()
         mSurfaceView = getSurfaceView()
         mSurfaceView?.holder?.addCallback(object : Callback {
-            override fun surfaceCreated(holder: SurfaceHolder?) {
+            override fun surfaceCreated(holder: SurfaceHolder) {
                 LogUtils.tag(TAG).d("surfaceCreated")
                 play(File(Environment.getExternalStorageDirectory(), "DCIM/Camera/1234.mp4"));
             }
 
-            override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int,
-                                        height: Int) {
+            override fun surfaceChanged(
+                holder: SurfaceHolder,
+                format: Int,
+                width: Int,
+                height: Int
+            ) {
                 LogUtils.tag(TAG).d("surfaceChanged")
                 GLES20.glViewport(0, 0, width, height)
             }
 
-            override fun surfaceDestroyed(holder: SurfaceHolder?) {
+            override fun surfaceDestroyed(holder: SurfaceHolder) {
                 LogUtils.tag(TAG).d("surfaceDestroyed")
                 mMediaPlayer?.stop()
                 mMediaPlayer?.release()

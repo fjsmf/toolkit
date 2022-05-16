@@ -30,7 +30,7 @@ class ActivityStack {
     private val mListeners: MutableList<ActivityEventListener> = CopyOnWriteArrayList()
     fun init(app: Application) {
         app.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
-            override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 if (activity != null) {
                     mStack.add(activity)
                 }
@@ -38,30 +38,30 @@ class ActivityStack {
                 notifyActivityEvent(activity, ActivityEvent.CREATE)
             }
 
-            override fun onActivityStarted(activity: Activity?) {
+            override fun onActivityStarted(activity: Activity) {
                 LogUtils.tag(TAG).d("onActivityStarted:%s", activity?.javaClass?.simpleName)
                 notifyActivityEvent(activity, ActivityEvent.START)
             }
 
-            override fun onActivityResumed(activity: Activity?) {
+            override fun onActivityResumed(activity: Activity) {
                 LogUtils.tag(TAG).d("onActivityResumed:%s", activity?.javaClass?.simpleName)
                 notifyActivityEvent(activity, ActivityEvent.RESUME)
             }
 
-            override fun onActivityPaused(activity: Activity?) {
+            override fun onActivityPaused(activity: Activity) {
                 LogUtils.tag(TAG).d("onActivityPaused:%s", activity?.javaClass?.simpleName)
                 notifyActivityEvent(activity, ActivityEvent.PAUSE)
             }
 
-            override fun onActivityStopped(activity: Activity?) {
+            override fun onActivityStopped(activity: Activity) {
                 LogUtils.tag(TAG).d("onActivityStopped:%s", activity?.javaClass?.simpleName)
                 notifyActivityEvent(activity, ActivityEvent.STOP)
             }
 
-            override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
                 LogUtils.tag(TAG).d("onActivitySaveInstanceState:%s", activity?.javaClass?.simpleName)
             }
-            override fun onActivityDestroyed(activity: Activity?) {
+            override fun onActivityDestroyed(activity: Activity) {
                 LogUtils.tag(TAG).d("onActivityDestroyed:%s", activity?.javaClass?.simpleName)
                 mStack.remove(activity)
                 notifyActivityEvent(activity, ActivityEvent.DESTROY)
